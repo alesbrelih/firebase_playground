@@ -1,0 +1,37 @@
+{
+  "name": "07_firebase_playground",
+  "version": "1.0.0",
+  "description": "firebase playground",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "firebase",
+    "test",
+    "responsive",
+    "db"
+  ],
+  "author": "Aleš Brelih",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-ui-router": "^0.3.2",
+    "angularfire": "^2.1.0",
+    "firebase": "^3.6.1"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.2",
+    "browserify": "^13.1.1",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-cleancss": "^0.2.2",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.9.1",
+    "gulp-uglify": "^2.0.0",
+    "gutil": "^1.6.4",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
