@@ -89,7 +89,8 @@ gulp.task("sass-watch-debug",["sass-debug"],done=>{
 gulp.task("debug",["browserify-debug","sass-debug"],()=>{
     browserSync.init({
         server: {
-            baseDir: "./public"
+            baseDir: "./public",
+            files:["./public/index.html","./src/scripts/app/templates/**/*.html"]
         }
     });
 

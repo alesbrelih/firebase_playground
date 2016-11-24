@@ -18,7 +18,8 @@
     "angular": "^1.5.8",
     "angular-ui-router": "^0.3.2",
     "angularfire": "^2.1.0",
-    "firebase": "^3.6.1"
+    "firebase": "^3.6.1",
+    "skeleton-sass": "0.0.1"
   },
   "devDependencies": {
     "browser-sync": "^2.18.2",
