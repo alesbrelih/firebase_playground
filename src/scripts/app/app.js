@@ -1,12 +1,8 @@
-(function(){
+(function(firebase){
     //references
     const angular = require("angular");
-    const firebase = require("firebase");
     require("angular-ui-router");
     require("angularfire");
-
-
-
 
 
     //main angular app
@@ -32,4 +28,4 @@
 
     
 
-})();
+})(window.firebase);
