@@ -1,7 +1,7 @@
 ////////////////////////////////
 // ----- GULP MODULES ------- //
 
-const   
+const
     gulp = require("gulp"),
     sass = require("gulp-sass"),
     browserify = require("browserify"),
@@ -31,7 +31,7 @@ const scriptFiles = ["./src/scripts/**/*.js"];
 
 // sass files
 
-const sassFiles = ["./src/sass/**.*scss"];
+const sassFiles = ["./src/sass/**/*.scss"];
 
 // -----------------------------//
 //////////////////////////////////

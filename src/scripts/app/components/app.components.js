@@ -4,9 +4,10 @@
 
 function registerAllComponentsModule(app){
 
-    
+    /////////////////////////////////
     // -----  Auth components ---- //
-
+    ////////////////////////////////
+    
     // main
     
     const authMain = require("./auth/auth.main.component");
@@ -15,6 +16,16 @@ function registerAllComponentsModule(app){
     //login
     const authLogin = require("./auth/auth.login.component");
     authLogin(app);
+
+    //register
+    const authRegister = require("./auth/auth.register.component");
+    authRegister(app);
+
+    ////////////////////////////////////
+    // ------------------------------ //
+    ////////////////////////////////////
+
+
 
 
 }

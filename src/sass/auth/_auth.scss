@@ -1,0 +1,8 @@
+@import "./_login.scss";
+@import "./_register.scss";
+
+input[type="text"],input[type="email"],input[type="password"]{
+    &[class^=ng-invalid]{
+        border:1px solid orangered;
+    }
+}

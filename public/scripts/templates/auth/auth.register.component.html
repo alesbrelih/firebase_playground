@@ -1,0 +1,10 @@
+<div class="register-wrapper">
+
+    <form novalidate name="registerForm" ng-submit="vm.Register()">
+        <input class="u-full-width" type="email" id="emailInput" placeholder="Email" ng-model="vm.User.email">
+        <input class="u-full-width" type="password" id="pwdInput" placeholder="Password" ng-model="vm.User.password">
+        <input class="u-full-width" type="password" id="pwdInputConfirm" placeholder="Password" ab-pwd-match="vm.User.password" ng-model="vm.User.confirm">
+        <button class="u-full-width button-primary" type="submit" ng-disabled="registerForm.$invalid">Register</button>
+    </form>
+
+</div>

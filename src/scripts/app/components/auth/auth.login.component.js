@@ -11,24 +11,17 @@ function authLoginComponentModule(app){
 
 
         //user info object
-        vm.UserInfo = {
-            username: "",
+        vm.User = {
+            email: "",
             password: ""
         };
 
 
         // --- METHODS --- //
-        vm.LoginIn = ()=>{
+        vm.Login = ()=>{
 
             //try to login
-            AuthService.$signInWithEmailAndPassword(vm.UserInfo.username,vm.UserInfo.password)
-                .then(firebaseUser => {
-
-                    console.log(firebaseUser);
-
-                }).catch(err=>{
-                    console.log(err);
-                });
+            AuthService.SignInWithEmailAndPwd(vm.User.email,vm.User.password);
         };
 
 

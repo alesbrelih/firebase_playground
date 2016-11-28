@@ -14,7 +14,7 @@ function appConfigModule(app,firebase){
         $firebaseRefProvider.registerUrl("https://scakapo-2f1c6.firebaseio.com");
 
 
-        //register states
+        //auth states
         $stateProvider
             .state("auth",{
                 abstract:true,
@@ -24,6 +24,10 @@ function appConfigModule(app,firebase){
             .state("auth.login",{
                 url:"/login",
                 template:"<auth-login></auth-login>"
+            })
+            .state("auth.register",{
+                url:"/register",
+                template: "<auth-register></auth-register>"
             });
 
         //if none of the states match

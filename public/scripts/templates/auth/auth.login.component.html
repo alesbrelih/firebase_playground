@@ -1,0 +1,11 @@
+<div class="login-wrapper">
+
+    <form novalidate name="loginForm" ng-submit="vm.Login()">
+        <input class="u-full-width" type="email" id="emailInput" placeholder="Email" ng-model="vm.User.email">
+        <input class="u-full-width" type="password" id="pwdInput" placeholder="Password" ng-model="vm.User.password">
+        <button class="u-full-width button-primary" type="submit" ng-disabled="loginForm.$invalid">Login</button>
+        <button class="u-full-width button-primary" type="submit" ui-sref="auth.register">Register</button>
+
+    </form>
+
+</div>
