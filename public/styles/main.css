@@ -229,11 +229,11 @@ p {
 /* LINKS
  * ------------------------------------------------ */
 a, a:visited {
-  color: #1EAEDB;
+  color: #E0BE04;
   text-decoration: underline; }
 
 a:hover, a:focus, a:active {
-  color: #0FA0CE; }
+  color: #c7a904; }
 
 /* LISTS
  * ------------------------------------------------ */
@@ -350,9 +350,9 @@ input[type="button"] {
   input[type="submit"].button-primary,
   input[type="reset"].button-primary,
   input[type="button"].button-primary {
-    color: #FFF;
-    background-color: #33C3F0;
-    border-color: #33C3F0; }
+    color: #3D3D3B;
+    background-color: #E0BE04;
+    border-color: #E0BE04; }
     .button.button-primary:hover, .button.button-primary:focus,
     button.button-primary:hover,
     button.button-primary:focus,
@@ -363,8 +363,8 @@ input[type="button"] {
     input[type="button"].button-primary:hover,
     input[type="button"].button-primary:focus {
       color: #FFF;
-      background-color: #1EAEDB;
-      border-color: #1EAEDB; }
+      background-color: #c7a904;
+      border-color: #c7a904; }
 
 .button:visited {
   color: #555; }
@@ -422,7 +422,7 @@ input[type="url"]:focus,
 input[type="password"]:focus,
 textarea:focus,
 select:focus {
-  border: 1px solid #33C3F0;
+  border: 1px solid #E0BE04;
   outline: 0; }
 
 label,
@@ -3056,7 +3056,7 @@ div[ui-view] {
   justify-content: center;
   align-self: center;
   flex-direction: column;
-  border: 2px solid #eee;
+  border: 2px solid #E0BE04;
   padding: 40px 40px 5px 40px;
   border-radius: 5px;
   background-color: white; }
@@ -3081,7 +3081,8 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
     .navbar .actions span {
       font-size: 1.2em;
       font-style: italic;
-      padding-right: 20px; }
+      padding-right: 20px;
+      font-family: 'Nova Script', cursive; }
     .navbar .actions ul {
       display: inline;
       list-style-type: none;

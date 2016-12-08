@@ -5,7 +5,7 @@
     justify-content: center;
     align-self: center;
     flex-direction: column;
-    border:2px solid #eee;
+    border:2px solid $yellow-theme;
     padding:40px 40px 5px 40px;
     border-radius:5px;
     background-color:white;
@@ -13,4 +13,5 @@
     input{
         text-align: center;
     }
+
 }

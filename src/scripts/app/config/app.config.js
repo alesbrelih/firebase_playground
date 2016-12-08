@@ -4,14 +4,19 @@
 
 function appConfigModule(app,firebase){
 
+    app.constant("FirebaseUrl","https://scakapo-2f1c6.firebaseio.com/");
+
     //initialize firebase
     require("../firebase/firebase.config")(firebase);
 
     // function that will configure app
-    function appConfigFunction($firebaseRefProvider,$stateProvider,$urlRouterProvider){
+    function appConfigFunction($firebaseRefProvider,$stateProvider,$urlRouterProvider,FirebaseUrl){
 
         //firebase default url
-        $firebaseRefProvider.registerUrl("https://scakapo-2f1c6.firebaseio.com");
+        $firebaseRefProvider.registerUrl({
+            default:FirebaseUrl,
+            profiles:FirebaseUrl+"profiles"
+        });
 
 
         //auth states
@@ -38,14 +43,14 @@ function appConfigModule(app,firebase){
                 url:"/main",
                 template:"<main></main>"
             });
-            
+
 
         //if none of the states match
         $urlRouterProvider.otherwise("/auth/login");
     }
 
     //inject firebase ref provider to make app testable
-    appConfigFunction.$inject = ["$firebaseRefProvider","$stateProvider","$urlRouterProvider"];
+    appConfigFunction.$inject = ["$firebaseRefProvider","$stateProvider","$urlRouterProvider","FirebaseUrl"];
 
     //app configuration
     app.config(appConfigFunction);

@@ -1,3 +1,6 @@
+//page variables
+@import "./base/_variables.scss";
+
 //skeleton css framework
 @import "../../node_modules/skeleton-sass/skeleton.scss";
 
@@ -6,8 +9,6 @@
 //import other fonts
 @import "./base/_fonts.scss";
 
-//page variables
-@import "./base/_variables.scss";
 
 
 //set box sizing to borderbox and remove all paddings/margins
@@ -16,6 +17,7 @@
     margin:0px;
     padding:0px;
 }
+
 
 //body default styels
 body{
