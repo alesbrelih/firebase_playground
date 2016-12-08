@@ -16,6 +16,8 @@ function appConfigModule(app,firebase){
 
         //auth states
         $stateProvider
+
+            // --- AUTH STATES --- //
             .state("auth",{
                 abstract:true,
                 url:"/auth",
@@ -28,7 +30,15 @@ function appConfigModule(app,firebase){
             .state("auth.register",{
                 url:"/register",
                 template: "<auth-register></auth-register>"
+            })
+
+            // --- MAIN COMPONENT --- ///;
+            .state("main",{
+                //abstract:true,
+                url:"/main",
+                template:"<main></main>"
             });
+            
 
         //if none of the states match
         $urlRouterProvider.otherwise("/auth/login");

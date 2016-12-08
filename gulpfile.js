@@ -67,7 +67,10 @@ gulp.task("sass-debug",()=>{
     gulp.src(sassFiles)
         .pipe(plumber())
         .pipe(sourcemaps.init())
-        .pipe(sass())
+        .pipe(sass().on("error",function(err){
+            gutil.log(err);
+            this.emit("end");
+        }))
         .pipe(sourcemaps.write("./"))
         .pipe(gulp.dest("./public/styles"));
 

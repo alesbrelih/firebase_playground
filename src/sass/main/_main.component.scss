@@ -1,0 +1,170 @@
+
+// main nav on top style
+.navbar{
+    //colors
+    background-color:$yellow-theme;
+    color:$black-theme;
+
+    //pading
+    padding:20px;
+
+    //display position
+    display:flex;
+    justify-content: space-between;
+
+
+    h3{
+        font-family: 'Nova Script', cursive;
+        margin-left:50px;
+        align-self: center;
+    }
+
+    //actions on main nav on big screens
+    .actions{
+
+        //extra right margin
+        margin-right:50px;
+
+        //span with user name styles
+        span{
+
+            //font styles and padding
+            font-size:1.2em;
+            font-style: italic;
+            padding-right:20px;
+        }
+
+        //action links container onmain nav
+        ul{
+            //list style
+            display: inline;
+            list-style-type: none;
+
+            //location on top
+            align-self: flex-start;
+
+            //font size
+            font-size:1.5em;
+
+            //each link styles
+            li{
+                padding: 10px;
+                cursor: pointer;
+                border-radius: 4px;
+                &:hover{
+                    color:$yellow-theme;
+                    background-color:$black-theme;
+                }
+            }
+        }
+    }
+
+    //nav main links when on small screen
+    .actions-collapsed{
+        //hidden if big screen
+        display:none;
+        margin-right:10px;
+
+        //styles for hamburger icon
+        i.fa.fa-bars{
+            align-self: flex-start;
+            font-size:1.5em;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 4px;
+
+            //hover styles
+            &:hover{
+                color:$yellow-theme;
+                background-color:$black-theme;
+            }
+        }
+    }
+}
+
+/*  ----  NAVBAR LINKS -----*/
+.navbar-links{
+
+    //bg and padding
+    background-color:$black-theme;
+    padding:10px;
+
+    // font styles
+    color:$yellow-theme;
+    text-align: right;
+
+    //links styles
+    ul{
+        //links container styles
+        list-style-type:none;
+        margin-bottom:0px;
+        margin-right:40px;
+
+        //each link styles
+        li{
+            //display
+            padding:10px 20px;
+            display: inline;
+            cursor: pointer;
+
+            //font
+            font-family: 'Nova Script', cursive;
+
+            //border
+            border-radius: 4px;
+
+            //on hover
+            &:hover{
+                background-color:$yellow-theme;
+                color:$black-theme;
+            }
+        }
+    }
+}
+
+.main-container{
+
+    // main container sizing
+    width:100%;
+    max-width: 960px;
+    min-height: 500px;
+
+    //margins
+    margin-left:auto;
+    margin-right:auto;
+
+    //bg color
+    background-color:white;
+}
+
+/*  RESPONSIVNESS */
+@media (max-width:700px){
+    .navbar{
+        h3{
+            margin-left:10px;
+        }
+        .actions{
+            margin-right:10px;
+        }
+
+    }
+}
+@media (max-width:550px){
+    .navbar{
+        h3{
+            font-size:2.5rem;
+            margin-bottom: 0px;
+        }
+        .actions{
+            display:none;
+        }
+        .actions-collapsed{
+            display:block;
+        }
+    }
+    .navbar-links{
+        ul{
+            margin-right:5px;
+        }
+    }
+}

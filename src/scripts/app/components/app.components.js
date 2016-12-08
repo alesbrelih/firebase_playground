@@ -7,9 +7,9 @@ function registerAllComponentsModule(app){
     /////////////////////////////////
     // -----  Auth components ---- //
     ////////////////////////////////
-    
+
     // main
-    
+
     const authMain = require("./auth/auth.main.component");
     authMain(app);
 
@@ -25,6 +25,13 @@ function registerAllComponentsModule(app){
     // ------------------------------ //
     ////////////////////////////////////
 
+    ///////////////////////////////////
+    // ------- Main Components ------//
+    ///////////////////////////////////
+
+    //main "wrapper
+    const mainComponent = require("./main/main.component");
+    mainComponent(app);
 
 
 

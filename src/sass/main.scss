@@ -1,10 +1,27 @@
+//skeleton css framework
 @import "../../node_modules/skeleton-sass/skeleton.scss";
 
+//import font awesome
+@import "../../node_modules/font-awesome/scss/font-awesome.scss";
+//import other fonts
+@import "./base/_fonts.scss";
 
+//page variables
+@import "./base/_variables.scss";
+
+
+//set box sizing to borderbox and remove all paddings/margins
+*,*:before,*:after{
+    box-sizing: border-box;
+    margin:0px;
+    padding:0px;
+}
+
+//body default styels
 body{
     height:100vh;
     width:100vw;
-
+    background-color:$gray-lightest;
 }
 
 div[ui-view]{
@@ -15,5 +32,8 @@ div[ui-view]{
     align-items: center;
 }
 
-//import auth styles 
+//import auth styles
 @import "./auth/_auth.scss";
+
+//import main component styles
+@import "./main/_main.component.scss";
