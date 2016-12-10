@@ -5,11 +5,17 @@
         <span>AB</span>
         <ul>
             <li class="fa fa-pencil"></li>
-            <li class="fa fa-sign-out"></li>
+            <li class="fa fa-sign-out" ng-click="vm.signOut()"></li>
         </ul>
     </div>
     <div class="actions-collapsed">
-        <i class="fa fa-bars"></i>
+        <i class="fa fa-bars" ng-click="vm.showCollapsed = !vm.showCollapsed"></i>
+        <div class="collapsed-selection" ng-class="{show:vm.showCollapsed}">
+            <ul>
+                <li>Edit</li>
+                <li>Logout</li>
+            </ul>
+        </div>
     </div>
 
 

@@ -3097,7 +3097,8 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
           background-color: #3D3D3B; }
   .navbar .actions-collapsed {
     display: none;
-    margin-right: 10px; }
+    margin-right: 10px;
+    position: relative; }
     .navbar .actions-collapsed i.fa.fa-bars {
       align-self: flex-start;
       font-size: 1.5em;
@@ -3107,6 +3108,35 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
       .navbar .actions-collapsed i.fa.fa-bars:hover {
         color: #E0BE04;
         background-color: #3D3D3B; }
+    .navbar .actions-collapsed .collapsed-selection {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 0px;
+      background-color: #3D3D3B;
+      color: #E0BE04;
+      border-radius: 4px;
+      border: 2px solid #E0BE04;
+      box-shadow: 0px 0px 2px #3D3D3B;
+      z-index: 10; }
+      .navbar .actions-collapsed .collapsed-selection.show {
+        display: block; }
+      .navbar .actions-collapsed .collapsed-selection ul {
+        list-style-type: none;
+        margin: 0px; }
+        .navbar .actions-collapsed .collapsed-selection ul li {
+          text-align: center;
+          padding: 10px 30px;
+          font-family: 'Nova Script', cursive;
+          margin-bottom: 0px; }
+          .navbar .actions-collapsed .collapsed-selection ul li:first-child {
+            padding-top: 20px; }
+          .navbar .actions-collapsed .collapsed-selection ul li:last-child {
+            padding-bottom: 20px; }
+          .navbar .actions-collapsed .collapsed-selection ul li:hover {
+            cursor: pointer;
+            background-color: #E0BE04;
+            color: #3D3D3B; }
 
 /*  ----  NAVBAR LINKS -----*/
 .navbar-links {

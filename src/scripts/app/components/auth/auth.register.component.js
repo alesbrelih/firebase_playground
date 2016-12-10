@@ -4,7 +4,7 @@
 function authRegisterComponentModule(app) {
 
     //auth register component controller
-    function authRegisterController(AuthService) {
+    function authRegisterController(ProfileService) {
 
         const vm = this;
 
@@ -19,12 +19,12 @@ function authRegisterComponentModule(app) {
 
         //register user
         vm.Register = () => {
-            AuthService.RegisterWithEmailAndPwd(vm.User.email,vm.User.password);
+            ProfileService.RegisterWithEmailAndPwd(vm.User.email,vm.User.password);
         };
     }
 
     //inject service
-    authRegisterController.$inject = ["AuthService"];
+    authRegisterController.$inject = ["ProfileService"];
 
 
     //Register component

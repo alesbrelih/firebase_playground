@@ -3,7 +3,7 @@
 function authLoginComponentModule(app){
 
     //function auth login controller
-    function authLoginController(AuthService){
+    function authLoginController(ProfileService){
 
         //this scope
         const vm = this;
@@ -21,14 +21,14 @@ function authLoginComponentModule(app){
         vm.Login = ()=>{
 
             //try to login
-            AuthService.SignInWithEmailAndPwd(vm.User.email,vm.User.password);
+            ProfileService.SignInWithEmailAndPwd(vm.User.email,vm.User.password);
         };
 
 
     }
 
     //inject authservice
-    authLoginController.$inject = ["AuthService"];
+    authLoginController.$inject = ["ProfileService"];
 
 
     app.component("authLogin",{

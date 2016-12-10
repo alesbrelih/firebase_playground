@@ -33,7 +33,7 @@
             font-style: italic;
             padding-right:20px;
             font-family: 'Nova Script', cursive;
-            
+
 
         }
 
@@ -68,6 +68,9 @@
         display:none;
         margin-right:10px;
 
+        //position
+        position:relative;
+
         //styles for hamburger icon
         i.fa.fa-bars{
             align-self: flex-start;
@@ -80,6 +83,54 @@
             &:hover{
                 color:$yellow-theme;
                 background-color:$black-theme;
+            }
+        }
+
+        .collapsed-selection{
+
+            display:none;
+
+
+            //position inside .actions collapsed
+            position:absolute;
+
+            top:50px;
+            right:0px;
+
+            background-color:$black-theme;
+            color:$yellow-theme;
+
+            border-radius:4px;
+            border:2px solid $yellow-theme;
+
+            box-shadow: 0px 0px 2px $black-theme;
+
+            z-index: 10;
+
+            &.show{
+                display:block;
+            }
+
+            ul{
+                list-style-type: none;
+                margin:0px;
+                li{
+                    text-align: center;
+                    padding:10px 30px;
+                    font-family: 'Nova Script', cursive;
+                    margin-bottom: 0px;
+                    &:first-child{
+                        padding-top:20px;
+                    }
+                    &:last-child{
+                        padding-bottom: 20px;
+                    }
+                    &:hover{
+                        cursor: pointer;
+                        background-color:$yellow-theme;
+                        color:$black-theme;
+                    }
+                }
             }
         }
     }

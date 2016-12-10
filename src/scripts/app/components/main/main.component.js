@@ -1,9 +1,19 @@
 // ---- MAIN COMPONENT - WRAPPER -- MODULE ----- //
 function mainComponentModule(app){
 
-    function mainComponentController(){
+    function mainComponentController(ProfileService){
 
+        //current scope
+        const vm = this;
+
+        vm.Profile = ProfileService.ReturnProfile();
+
+        vm.signOut = ()=>{
+            ProfileService.SignOut();
+        };
     }
+    //inject service
+    mainComponentController.$inject = ["ProfileService"];
 
 
     //register component
