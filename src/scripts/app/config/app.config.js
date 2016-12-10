@@ -3,9 +3,13 @@
 ///////////////////////////////////////////////
 
 function appConfigModule(app, firebase) {
-
+    app.constant("Firebase",firebase);
     app.constant("FirebaseUrl", "https://scakapo-2f1c6.firebaseio.com/");
     app.constant("MainState","main.profile");
+    app.constant("UploadStatus",{
+        error:"error uploading",
+        success:"upload successful"
+    });
 
 
 
@@ -60,8 +64,10 @@ function appConfigModule(app, firebase) {
         $urlRouterProvider.otherwise("/auth/login");
     }
 
+
     //inject firebase ref provider to make app testable
     appConfigFunction.$inject = ["$firebaseRefProvider", "$stateProvider", "$urlRouterProvider", "FirebaseUrl"];
+
 
     //app configuration
     app.config(appConfigFunction);

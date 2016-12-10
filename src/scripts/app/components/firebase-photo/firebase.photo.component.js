@@ -2,21 +2,34 @@
 function firebasePhotoComponentModule(app){
 
     //controller
-    function firebasePhotoComponentController(){
+    function firebasePhotoComponentController(FirebaseStorage,$rootScope,UploadStatus,$scope){
         const vm = this;
+
+        //set event catcher
+        $rootScope.$on(UploadStatus.success,function(){
+            $scope.$apply(function(){
+                vm.Photo = null;
+                vm.previewSrc = null;
+            });
+
+        });
+        
+
+
+        FirebaseStorage.GetProfilePhotos();
 
         //upload photo
         vm.UploadPhoto = ()=>{
             if(vm.Photo != null){
-                //check if photo really isnt null
+                FirebaseStorage.UploadProfilePhoto(vm.Photo);
 
-                //TODO: FIREBASESTUFF WITH vm.Photo
             }
-
         };
 
 
+
     }
+    firebasePhotoComponentController.$inject = ["FirebaseStorage","$rootScope","UploadStatus","$scope"];
 
     //register component
     app.component("firebasePhoto",{
@@ -27,5 +40,8 @@ function firebasePhotoComponentModule(app){
 
 }
 
+
 //export firebasephoto component module
 module.exports = firebasePhotoComponentModule;
+
+

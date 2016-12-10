@@ -13,6 +13,10 @@ function registerAllServicesModule(app){
     //profile service
     const profileService = require("./profile/profile.services");
     profileService(app);
+
+    //firebase storage service
+    const storageService = require("./firebase-storage/firebase.storage.service");
+    storageService(app);
 }
 
 module.exports = registerAllServicesModule;
