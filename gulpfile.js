@@ -57,6 +57,7 @@ gulp.task("browserify-debug",()=>{
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps:true}))
         .pipe(sourcemaps.write("./"))
+        .pipe(plumber.stop())
         .pipe(gulp.dest("./public/scripts"));
 
 });
@@ -91,10 +92,8 @@ gulp.task("sass-watch-debug",["sass-debug"],done=>{
 
 gulp.task("debug",["browserify-debug","sass-debug"],()=>{
     browserSync.init({
-        server: {
-            baseDir: "./public",
-            files:["./public/index.html","./src/scripts/app/templates/**/*.html"]
-        }
+        server: "./public/",
+        files:["/public/**/*.html"]
     });
 
     gulp.watch(scriptFiles,["browserify-watch-debug"]);
