@@ -10,6 +10,7 @@
  * ------------------------------------------------ */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 @import url("https://fonts.googleapis.com/css?family=Nova+Script");
+@import url("https://fonts.googleapis.com/css?family=Play");
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -3041,7 +3042,8 @@ hr {
 body {
   height: 100vh;
   width: 100vw;
-  background-color: #fbfbfb; }
+  background-color: #fbfbfb;
+  font-family: "Play", sans-serif; }
 
 div[ui-view] {
   width: 100%;
@@ -3164,7 +3166,8 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
   min-height: 500px;
   margin-left: auto;
   margin-right: auto;
-  background-color: white; }
+  margin-top: 40px;
+  margin-bottom: 40px; }
 
 /*  RESPONSIVNESS */
 @media (max-width: 700px) {
@@ -3183,5 +3186,87 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
     display: block; }
   .navbar-links ul {
     margin-right: 5px; } }
+
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d1d1d1;
+  border-radius: 4px;
+  background-color: white; }
+  .profile-wrapper .profile-picture {
+    flex: 4;
+    border-right: 1px solid #d1d1d1;
+    align-self: stretch;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+    .profile-wrapper .profile-picture .rounded-container {
+      margin: 20px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: url("https://ckinknoazoro.files.wordpress.com/2011/06/random.jpg");
+      background-position: center;
+      background-size: cover; }
+  .profile-wrapper .profile-info {
+    flex: 4;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; }
+    .profile-wrapper .profile-info ul {
+      list-style-type: none;
+      width: 100%;
+      margin: 0px; }
+      .profile-wrapper .profile-info ul li:last-child .info-container .content input {
+        margin-bottom: 0px; }
+      .profile-wrapper .profile-info ul li h6 {
+        margin-bottom: 5px;
+        color: #E0BE04;
+        font-size: 1.2em;
+        font-family: "Nova Script", cursive; }
+      .profile-wrapper .profile-info ul li .content {
+        padding-left: 20px; }
+        .profile-wrapper .profile-info ul li .content input {
+          display: block; }
+  .profile-wrapper .profile-actions {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: #3D3D3B;
+    border-left: 1px solid #d1d1d1;
+    align-self: stretch; }
+    .profile-wrapper .profile-actions i.fa {
+      margin: 20px;
+      font-size: 1.4em;
+      cursor: pointer;
+      transition: all 150ms ease-in-out; }
+      .profile-wrapper .profile-actions i.fa:hover {
+        color: #E0BE04;
+        transform: scale(1.2); }
+      .profile-wrapper .profile-actions i.fa.default {
+        color: #3D3D3B; }
+      .profile-wrapper .profile-actions i.fa.primary {
+        color: #E0BE04; }
+      .profile-wrapper .profile-actions i.fa.info {
+        color: #133497; }
+      .profile-wrapper .profile-actions i.fa.danger {
+        color: #6B0995; }
+
+@media (max-width: 550px) {
+  .profile-wrapper {
+    flex-direction: column; }
+    .profile-wrapper .profile-picture {
+      border: none;
+      border-bottom: 1px solid #d1d1d1; }
+    .profile-wrapper .profile-actions {
+      border: none;
+      border-top: 1px solid #d1d1d1; } }
 
 /*# sourceMappingURL=main.css.map */

@@ -1,6 +1,6 @@
 function profileServicesModule(app){
 
-    function profileServiceController($firebaseRef,$firebaseArray,Auth,$state){
+    function profileServiceController($firebaseRef,$firebaseArray,Auth,$state,MainState){
 
         //profile object
         let profileObject = null;
@@ -17,13 +17,14 @@ function profileServicesModule(app){
             //sets profile object data
             profileObject = profileDbRef.$getRecord(uid);
 
+
         };
 
         //sets profileInfo
         profileFactory.CreateProfile = profile =>{
             profileDbRef.child(profileObject.uid).set({
                 name:profile.name,
-                surname:profile.surname,
+                lastname:profile.lastname,
                 username:profile.username
             });
         };
@@ -32,7 +33,7 @@ function profileServicesModule(app){
         profileFactory.EditProfile = profile => {
             profileDbRef.child(profileObject.uid).set({
                 name: profile.name,
-                surname:profile.surname,
+                lastname:profile.surname,
                 username:profile.username
             });
         };
@@ -43,7 +44,8 @@ function profileServicesModule(app){
             //registers using firebase register with email and pwd
             return Auth.$createUserWithEmailAndPassword(email, pwd)
                 .then(firebaseUser => {
-                    console.log("User " + firebaseUser.uid + " created successfully!");
+                    profileFactory.GetProfile(firebaseUser.uid);
+                    $state.go(MainState);
                 }, err => {
                     console.log(err);
                 });
@@ -52,13 +54,12 @@ function profileServicesModule(app){
 
         profileFactory.SignInWithEmailAndPwd = (email,pwd) => {
 
-            console.log("login in");
             //signs in using firebase auth
             return Auth.$signInWithEmailAndPassword(email,pwd)
                 .then(firebaseUser => {
 
-                    console.log(firebaseUser);
-                    $state.go("main");
+                    profileFactory.GetProfile(firebaseUser.uid);
+                    $state.go(MainState);
 
                 },
                 err => {
@@ -104,7 +105,7 @@ function profileServicesModule(app){
 
 
     }
-    profileServiceController.$inject = ["$firebaseRef","$firebaseArray","Auth","$state"];
+    profileServiceController.$inject = ["$firebaseRef","$firebaseArray","Auth","$state","MainState"];
 
     app.factory("ProfileService",profileServiceController);
 

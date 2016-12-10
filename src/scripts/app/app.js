@@ -25,6 +25,10 @@
     const directives = require("./directives/app.directives");
     directives(app);
 
+    //register filters
+    const filters = require("./filter/null/null.filter");
+    filters(app);
+    
 
 
 

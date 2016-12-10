@@ -6,7 +6,9 @@ function registerAllAttributeDirectives(app){
     const abPwdMatch = require("./ab.pwd.match.directive");
     abPwdMatch(app);
 
-
+    // file upload attr directive
+    const abPhotoUpload = require("./ab.photo.upload.directive");
+    abPhotoUpload(app);
 }
 
 module.exports = registerAllAttributeDirectives;

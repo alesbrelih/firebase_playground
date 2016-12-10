@@ -1,0 +1,144 @@
+// ---- PROFILE COMPONENT STYLES ---- //
+.profile-wrapper{
+
+    display:flex;
+    align-items: center;
+    justify-content: center;
+
+    border:1px solid $gray-light;
+    border-radius:4px;
+
+    background-color:white;
+
+
+
+    .profile-picture{
+        flex:4;
+
+        border-right:1px solid $gray-light;
+        align-self: stretch;
+        padding:20px;
+
+        //flex centered row
+        @include flex-container-centered-row();
+
+        //container for img
+        .rounded-container{
+
+            margin:20px;
+
+            width:100px;
+            height:100px;
+            border-radius: 50%;
+
+            background:url("https://ckinknoazoro.files.wordpress.com/2011/06/random.jpg");
+            background-position: center;
+            background-size: cover;
+
+
+
+        }
+
+
+
+
+    }
+
+    .profile-info{
+        flex:4;
+        padding:20px 40px;
+
+        //flex centered column
+        @include flex-container-centered-column();
+
+        ul{
+            list-style-type: none;
+            width:100%;
+            margin:0px;
+            //margin-left:40px;
+            li{
+                &:last-child{
+                    .info-container{
+                        .content{
+                            input{
+                                margin-bottom: 0px;
+                            }
+                        }
+                    }
+                }
+                h6{
+                    margin-bottom: 5px;
+                    color:$yellow-theme;
+                    font-size:1.2em;
+                    font-family:$font-family-nova-script;
+                }
+                .content{
+                    padding-left:20px;
+
+                    input{
+                        display:block;
+                    }
+                }
+
+            }
+        }
+
+    }
+
+    .profile-actions{
+        flex:1;
+        padding:20px;
+
+        //flex centered column
+        @include flex-container-centered-column();
+
+        color:$black-theme;
+
+        border-left:1px solid $gray-light;
+        align-self: stretch;
+
+        //action list
+        i.fa{
+            //list item styles
+            margin:20px;
+            font-size:1.4em;
+            cursor: pointer;
+            transition:all 150ms ease-in-out;
+
+            //on hover styles
+            &:hover{
+                color:$yellow-theme;
+                transform:scale(1.2);
+            }
+
+            //other themes
+            &.default{
+                color:$black-theme;
+            }
+            &.primary{
+                color:$yellow-theme;
+            }
+            &.info{
+                color:$info-theme;
+            }
+            &.danger{
+                color:$danger-theme;
+            }
+
+        }
+    }
+}
+@media(max-width:550px){
+    .profile-wrapper{
+        flex-direction: column;
+        .profile-picture{
+            border:none;
+            border-bottom:1px solid $gray-light;
+        }
+        .profile-actions{
+            border:none;
+            border-top:1px solid $gray-light;
+            
+        }
+    }
+}

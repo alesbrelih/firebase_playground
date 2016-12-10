@@ -13,7 +13,7 @@
         <div class="collapsed-selection" ng-class="{show:vm.showCollapsed}">
             <ul>
                 <li>Edit</li>
-                <li>Logout</li>
+                <li ng-click="vm.signOut()">Logout</li>
             </ul>
         </div>
     </div>
@@ -27,5 +27,5 @@
     </ul>
 </div>
 <div class="main-container">
-
+    <div ui-view></div>
 </div>

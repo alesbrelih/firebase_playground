@@ -33,6 +33,19 @@ function registerAllComponentsModule(app){
     const mainComponent = require("./main/main.component");
     mainComponent(app);
 
+    //profile component
+    const profileComponent = require("./profile/profile.component");
+    profileComponent(app);
+
+
+    //////////////////////////////////
+    // ------ Helper components ----//
+    //////////////////////////////////
+
+    //firebase photo select/upload for profile photo
+    const firebasePhotoComponent = require("./firebase-photo/firebase.photo.component");
+    firebasePhotoComponent(app);
+
 
 
 }

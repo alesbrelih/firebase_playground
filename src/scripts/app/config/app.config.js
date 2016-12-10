@@ -5,6 +5,7 @@
 function appConfigModule(app, firebase) {
 
     app.constant("FirebaseUrl", "https://scakapo-2f1c6.firebaseio.com/");
+    app.constant("MainState","main.profile");
 
 
 
@@ -39,8 +40,7 @@ function appConfigModule(app, firebase) {
 
             // --- MAIN COMPONENT --- ///;
             .state("main", {
-                //abstract:true,
-                url: "/main",
+                abstract:true,
                 template: "<main></main>",
                 resolve: {
                     profileInstance: ["Auth", function (Auth) {
@@ -48,6 +48,11 @@ function appConfigModule(app, firebase) {
                     }]
                 }
 
+            })
+            // ---- profile route ---- //
+            .state("main.profile",{
+                url:"/profile",
+                template:"<profile></profile>"
             });
 
 

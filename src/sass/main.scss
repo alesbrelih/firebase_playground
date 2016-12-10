@@ -9,6 +9,9 @@
 //import other fonts
 @import "./base/_fonts.scss";
 
+//mixins
+@import "./base/_mixins.scss";
+
 
 
 //set box sizing to borderbox and remove all paddings/margins
@@ -24,6 +27,7 @@ body{
     height:100vh;
     width:100vw;
     background-color:$gray-lightest;
+    font-family:$font-family-play;
 }
 
 div[ui-view]{
@@ -39,3 +43,7 @@ div[ui-view]{
 
 //import main component styles
 @import "./main/_main.component.scss";
+
+//import profile styles
+@import "./profile/_profile.component.scss";
+
