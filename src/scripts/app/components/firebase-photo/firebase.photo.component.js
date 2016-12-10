@@ -5,10 +5,25 @@ function firebasePhotoComponentModule(app){
     function firebasePhotoComponentController(){
         const vm = this;
 
+        //upload photo
+        vm.UploadPhoto = ()=>{
+            if(vm.Photo != null){
+                //check if photo really isnt null
+
+                //TODO: FIREBASESTUFF WITH vm.Photo
+            }
+
+        };
+
+
     }
 
     //register component
-    app.component("firebasePhoto",firebasePhotoComponentController);
+    app.component("firebasePhoto",{
+        controller:firebasePhotoComponentController,
+        controllerAs:"vm",
+        templateUrl:"/scripts/templates/firebase-photo/firebase.photo.component.html"
+    });
 
 }
 

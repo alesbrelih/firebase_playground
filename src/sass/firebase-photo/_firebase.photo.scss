@@ -1,0 +1,80 @@
+firebase-photo{
+    //testing
+    position:fixed;
+    background-color:rgba($gray-lightest,0.9);
+    width:100vw;
+    height:100vh;
+    max-width: 100%;
+    top:0;
+    left:0;
+
+    @include flex-container-centered-column();
+
+    .firebase-photo-wrapper{
+        margin:10px;
+        min-height: 500px;
+        max-width: 400px;
+        width:100%;
+        background-color:white;
+        border:1px solid $gray-light;
+        border-radius: 4px;
+
+        @include flex-container-centered-column();
+
+        .existing-photos{
+            padding:20px;
+            overflow-y: auto;
+            h6{
+                @include custom-h6-title();
+            }
+            ul{
+                margin:0px;
+                list-style-type: none;
+                li{
+                    width:100%;
+                    .existing-photo{
+                        @include flex-container-centered-row();
+                        .img-container,.img-select{
+                            padding:10px;
+                        }
+                        .img-container{
+                            flex:1;
+                            img{
+                                max-width: 100%;
+                                max-height: 100%;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+
+        .upload-new{
+            padding:20px;
+            align-self: stretch;
+            border-top:1px solid $gray-light;
+            @include flex-container-centered-column();
+
+
+            h6{
+                align-self: stretch;
+                @include custom-h6-title();
+            }
+            .preview-photo-container{
+                height:200px;
+                padding:20px;
+                img{
+                    max-width: 100%;
+                    max-height: 100%;
+                }
+            }
+            label,.photo-actions{
+                i.fa{
+                    font-size:1.4em;
+                }
+            }
+        }
+    }
+}

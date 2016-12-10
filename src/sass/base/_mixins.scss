@@ -1,3 +1,6 @@
+// ---- MIXINS ---- //
+
+//GENERATES flex container , centered and in row
 @mixin flex-container-centered-row(){
     display:flex;
     justify-content: center;
@@ -5,9 +8,18 @@
 
 }
 
+//GENERATES flex container , centered and in column
 @mixin flex-container-centered-column(){
     display:flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+}
+
+//custom h6 title
+@mixin custom-h6-title(){
+    margin-bottom: 5px;
+    color:$yellow-theme;
+    font-size:1.2em;
+    font-family:$font-family-nova-script;
 }

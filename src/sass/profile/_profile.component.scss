@@ -67,10 +67,7 @@
                     }
                 }
                 h6{
-                    margin-bottom: 5px;
-                    color:$yellow-theme;
-                    font-size:1.2em;
-                    font-family:$font-family-nova-script;
+                    @include custom-h6-title();
                 }
                 .content{
                     padding-left:20px;
@@ -110,20 +107,7 @@
                 color:$yellow-theme;
                 transform:scale(1.2);
             }
-
-            //other themes
-            &.default{
-                color:$black-theme;
-            }
-            &.primary{
-                color:$yellow-theme;
-            }
-            &.info{
-                color:$info-theme;
-            }
-            &.danger{
-                color:$danger-theme;
-            }
+            
 
         }
     }
@@ -138,7 +122,7 @@
         .profile-actions{
             border:none;
             border-top:1px solid $gray-light;
-            
+
         }
     }
 }

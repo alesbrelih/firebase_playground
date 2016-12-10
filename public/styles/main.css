@@ -1,4 +1,33 @@
 @charset "UTF-8";
+@import url("https://fonts.googleapis.com/css?family=Nova+Script");
+@import url("https://fonts.googleapis.com/css?family=Play");
+.default {
+  color: #3D3D3B !important; }
+
+.primary {
+  color: #E0BE04 !important; }
+
+.info {
+  color: #133497 !important; }
+
+.danger {
+  color: #6B0995 !important; }
+
+.default-bg {
+  background-color: #3D3D3B !important; }
+
+.primary-bg {
+  background-color: #E0BE04 !important; }
+
+.info-bg {
+  background-color: #133497 !important; }
+
+.danger-bg {
+  background-color: #6B0995 !important; }
+
+.bot-margin-20 {
+  margin-bottom: 20px !important; }
+
 /**
  * SASS/SCSS/Compass Transcription of Skeleton Responsive Grid
  * @author Dennis Thompson <http://www.atomicpages.net>
@@ -9,8 +38,6 @@
 /* RESET
  * ------------------------------------------------ */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
-@import url("https://fonts.googleapis.com/css?family=Nova+Script");
-@import url("https://fonts.googleapis.com/css?family=Play");
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -3250,14 +3277,6 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
       .profile-wrapper .profile-actions i.fa:hover {
         color: #E0BE04;
         transform: scale(1.2); }
-      .profile-wrapper .profile-actions i.fa.default {
-        color: #3D3D3B; }
-      .profile-wrapper .profile-actions i.fa.primary {
-        color: #E0BE04; }
-      .profile-wrapper .profile-actions i.fa.info {
-        color: #133497; }
-      .profile-wrapper .profile-actions i.fa.danger {
-        color: #6B0995; }
 
 @media (max-width: 550px) {
   .profile-wrapper {
@@ -3268,5 +3287,76 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
     .profile-wrapper .profile-actions {
       border: none;
       border-top: 1px solid #d1d1d1; } }
+
+firebase-photo {
+  position: fixed;
+  background-color: rgba(251, 251, 251, 0.9);
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; }
+  firebase-photo .firebase-photo-wrapper {
+    margin: 10px;
+    min-height: 500px;
+    max-width: 400px;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #d1d1d1;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; }
+    firebase-photo .firebase-photo-wrapper .existing-photos {
+      padding: 20px;
+      overflow-y: auto; }
+      firebase-photo .firebase-photo-wrapper .existing-photos h6 {
+        margin-bottom: 5px;
+        color: #E0BE04;
+        font-size: 1.2em;
+        font-family: "Nova Script", cursive; }
+      firebase-photo .firebase-photo-wrapper .existing-photos ul {
+        margin: 0px;
+        list-style-type: none; }
+        firebase-photo .firebase-photo-wrapper .existing-photos ul li {
+          width: 100%; }
+          firebase-photo .firebase-photo-wrapper .existing-photos ul li .existing-photo {
+            display: flex;
+            justify-content: center;
+            align-items: center; }
+            firebase-photo .firebase-photo-wrapper .existing-photos ul li .existing-photo .img-container, firebase-photo .firebase-photo-wrapper .existing-photos ul li .existing-photo .img-select {
+              padding: 10px; }
+            firebase-photo .firebase-photo-wrapper .existing-photos ul li .existing-photo .img-container {
+              flex: 1; }
+              firebase-photo .firebase-photo-wrapper .existing-photos ul li .existing-photo .img-container img {
+                max-width: 100%;
+                max-height: 100%; }
+    firebase-photo .firebase-photo-wrapper .upload-new {
+      padding: 20px;
+      align-self: stretch;
+      border-top: 1px solid #d1d1d1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column; }
+      firebase-photo .firebase-photo-wrapper .upload-new h6 {
+        align-self: stretch;
+        margin-bottom: 5px;
+        color: #E0BE04;
+        font-size: 1.2em;
+        font-family: "Nova Script", cursive; }
+      firebase-photo .firebase-photo-wrapper .upload-new .preview-photo-container {
+        height: 200px;
+        padding: 20px; }
+        firebase-photo .firebase-photo-wrapper .upload-new .preview-photo-container img {
+          max-width: 100%;
+          max-height: 100%; }
+      firebase-photo .firebase-photo-wrapper .upload-new label i.fa, firebase-photo .firebase-photo-wrapper .upload-new .photo-actions i.fa {
+        font-size: 1.4em; }
 
 /*# sourceMappingURL=main.css.map */

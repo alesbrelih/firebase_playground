@@ -1,0 +1,30 @@
+
+.default{
+    color:$black-theme !important;
+}
+.primary{
+    color:$yellow-theme !important;
+}
+.info{
+    color:$info-theme !important;
+}
+.danger{
+    color:$danger-theme !important;
+}
+
+.default-bg{
+    background-color:$black-theme !important;
+}
+.primary-bg{
+    background-color:$yellow-theme !important;
+}
+.info-bg{
+    background-color:$info-theme !important;
+}
+.danger-bg{
+    background-color:$danger-theme !important;
+}
+
+.bot-margin-20{
+    margin-bottom:20px !important;
+}

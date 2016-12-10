@@ -1,6 +1,9 @@
 //page variables
 @import "./base/_variables.scss";
 
+//base styles
+@import "./base/_base.scss";
+
 //skeleton css framework
 @import "../../node_modules/skeleton-sass/skeleton.scss";
 
@@ -46,4 +49,7 @@ div[ui-view]{
 
 //import profile styles
 @import "./profile/_profile.component.scss";
+
+//import firebase-photo styles
+@import "./firebase-photo/_firebase.photo.scss";
 
