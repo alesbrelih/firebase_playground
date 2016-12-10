@@ -86,31 +86,38 @@
             }
         }
 
+        //collapsed menu
         .collapsed-selection{
 
             display:none;
 
-
             //position inside .actions collapsed
             position:absolute;
 
+            //position coords
             top:50px;
             right:0px;
 
+            //colors
             background-color:$black-theme;
             color:$yellow-theme;
 
+            //border
             border-radius:4px;
             border:2px solid $yellow-theme;
 
+            //box shadow for extra effect
             box-shadow: 0px 0px 2px $black-theme;
 
+            //z index
             z-index: 10;
 
+            //show when class
             &.show{
                 display:block;
             }
 
+            //items in list
             ul{
                 list-style-type: none;
                 margin:0px;
