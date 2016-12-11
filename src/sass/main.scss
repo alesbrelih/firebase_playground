@@ -17,6 +17,8 @@
 
 
 
+
+
 //set box sizing to borderbox and remove all paddings/margins
 *,*:before,*:after{
     box-sizing: border-box;
@@ -40,6 +42,10 @@ div[ui-view]{
     justify-content: center;
     align-items: center;
 }
+
+//import toastrs styles
+@import "../../node_modules/angular-toastr/dist/_angular-toastr.scss";
+
 
 //import spinner styles
 @import "./spinner/_spinner.scss";

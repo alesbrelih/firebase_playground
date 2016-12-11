@@ -7,7 +7,7 @@
 
 
     //main angular app
-    const app = angular.module("firebaseApp",["ui.router","firebase"]);
+    const app = angular.module("firebaseApp",["ui.router","firebase",require("angular-animate"),require("angular-toastr")]);
 
     //register services
     const services = require("./services/app.services");
@@ -28,6 +28,8 @@
     //register filters
     const filters = require("./filter/null/null.filter");
     filters(app);
+    
+
 
 
 

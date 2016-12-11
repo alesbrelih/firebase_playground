@@ -10,7 +10,7 @@ function backImgDirectiveModule(app){
 
                 if(value == null){
                     el.css({
-                        "background-image": "url('https://ckinknoazoro.files.wordpress.com/2011/06/random.jpg')",
+                        "background-image": "url('/img/empty-profile.jpg')",
                         "background-size" : "cover"
                     });
                 }

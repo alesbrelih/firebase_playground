@@ -1,9 +1,9 @@
 function profileServicesModule(app){
 
-    function profileServiceController($firebaseRef,$firebaseObject,$firebaseArray,Auth,$state,MainState,FirebaseStorage,$q){
+    function profileServiceController($firebaseRef,$firebaseObject,$firebaseArray,Auth,$state,MainState,FirebaseStorage,$q,toastr){
 
         //profile object
-        let profileObject = null;
+        let profileObject = {};
 
         //profile photos
         let profilePhotos = null;
@@ -33,7 +33,7 @@ function profileServicesModule(app){
             p_uid = uid;
 
             //sets profile object data
-            profileObject = $firebaseObject;
+            profileObject = $firebaseObject($firebaseRef.profiles.child(p_uid));
 
             //gets profile photos
             getProfilePhotos();
@@ -59,7 +59,9 @@ function profileServicesModule(app){
                     {
                         let photoDbEntry = profilePhotos.$getRecord(entryId[0]);
                         photoDbEntry.url = snap.downloadURL;
-                        profilePhotos.$save(photoDbEntry);
+                        profilePhotos.$save(photoDbEntry).then(()=>{
+                            toastr.success("Profile photo successfully saved.","success");
+                        });
 
                     }
                     else{
@@ -69,8 +71,9 @@ function profileServicesModule(app){
                                 name:photo.name,
                                 url:snap.downloadURL
                             })
-                            .then(ref=>{
-                                console.log("Added photo ref to db",ref);
+                            .then( () =>{
+                                toastr.success("Profile photo successfully saved.","success");
+                                //console.log("Added photo ref to db",ref);
                             });
                     }
 
@@ -84,17 +87,24 @@ function profileServicesModule(app){
         //remove profilephoto
         profileFactory.RemoveProfilePhoto = photo =>{
 
+            //removes photo from storage
             FirebaseStorage.RemoveProfilePhoto(photo,p_uid)
                 .then(()=>{
+                    //if removed from storage successfully
+
+                    //get ref in db
                     var photoDb = profilePhotos
                         .filter(item => {
                             return item.name == photo.name;
                         });
-                    console.log(photoDb);
+
+                    //if ref found
                     if(photoDb.length == 1){
+                        //remove from
                         profilePhotos.$remove(photoDb[0])
                             .then( () =>{
-                                console.log("Profile photo removed.");
+                                toastr.success("Profile photo successfully removed.","success");
+                                //console.log("Profile photo removed.");
                             });
                     }
 
@@ -106,11 +116,22 @@ function profileServicesModule(app){
 
         //edit profileInfo
         profileFactory.SetProfile = profile => {
-            profileDbRef.child(profileObject.uid).set({
-                name: profile.name,
-                lastname:profile.surname,
-                username:profile.username
+
+            //all changed data need to be set
+            for(let prop in profile){
+                profileObject[prop] = profile[prop];
+            }
+
+            profileObject.$save().then(function(success){
+                //console.log(success);
+                toastr.success("Profile successfully updated.","success");
+
+                if($state.current.name == "main.profile"){
+                    $state.go($state.current, {}, {reload: true});
+
+                }
             });
+
         };
 
         // register with email pwd
@@ -120,9 +141,11 @@ function profileServicesModule(app){
             return Auth.$createUserWithEmailAndPassword(email, pwd)
                 .then(firebaseUser => {
                     profileFactory.GetProfile(firebaseUser.uid);
+                    toastr.success("Account created.","success");
                     $state.go(MainState);
                 }, err => {
-                    console.log(err);
+                    //console.log(err);
+                    toastr.error(err.data,"error");
                 });
 
         };
@@ -132,13 +155,14 @@ function profileServicesModule(app){
             //signs in using firebase auth
             return Auth.$signInWithEmailAndPassword(email,pwd)
                 .then(firebaseUser => {
-
+                    toastr.success("Login successful.","success");
                     profileFactory.GetProfile(firebaseUser.uid);
                     $state.go(MainState);
 
                 },
                 err => {
-                    console.log(err);
+                    //console.log(err);
+                    toastr.error(err.data,"error");
                 });
 
         };
@@ -149,11 +173,9 @@ function profileServicesModule(app){
 
             if(firebaseUser){ //user logged
                 //set profile
-                console.log("firebaseUserFound",firebaseUser);
                 profileFactory.GetProfile(firebaseUser.uid);
             }
             else{ //user was logged
-                console.log("firebaseUserNOTFound",firebaseUser);
                 $state.go("auth.login");
             }
 
@@ -183,7 +205,7 @@ function profileServicesModule(app){
         ////////////////////////////////////////////////////////////////////////
         // --------- PROMISE METHODS FOR PROFILE PHOTO SELECTION OPEN ------ ///
         ////////////////////////////////////////////////////////////////////////
-        
+
         //opens profile photo selection
         profileFactory.OpenProfilePhotoSelect = ()=>{
             promisePhotoSelect = $q.defer();
@@ -203,9 +225,8 @@ function profileServicesModule(app){
         //return factory
         return profileFactory;
 
-
     }
-    profileServiceController.$inject = ["$firebaseRef","$firebaseObject","$firebaseArray","Auth","$state","MainState","FirebaseStorage","$q"];
+    profileServiceController.$inject = ["$firebaseRef","$firebaseObject","$firebaseArray","Auth","$state","MainState","FirebaseStorage","$q","toastr"];
 
     app.factory("ProfileService",profileServiceController);
 

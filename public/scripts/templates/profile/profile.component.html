@@ -1,6 +1,6 @@
 <div class="profile-wrapper">
     <div class="profile-picture">
-        <div class="rounded-container" back-img="vm.EditProfile.photo">
+        <div class="rounded-container" back-img="vm.editProfile.photo">
 
         </div>
     </div>
@@ -10,8 +10,8 @@
                 <div class="info-container">
                     <h6>name</h6>
                     <div class="content">
-                        <span ng-hide="vm.editFlag">{{vm.EditProfile.name | nullFilter }}</span>
-                        <input type="text" ng-model="vm.EditProfile.name" ng-if="vm.editFlag">
+                        <span ng-hide="vm.editFlag">{{vm.editProfile.name | nullFilter }}</span>
+                        <input type="text" ng-model="vm.editProfile.name" ng-if="vm.editFlag">
                     </div>
 
                 </div>
@@ -20,8 +20,8 @@
                 <div class="info-container">
                     <h6>lastname</h6>
                     <div class="content">
-                         <span ng-hide="vm.editFlag">{{vm.EditProfile.lastname | nullFilter }}</span>
-                        <input type="text" ng-model="vm.EditProfile.lastname" ng-if="vm.editFlag">
+                         <span ng-hide="vm.editFlag">{{vm.editProfile.lastname | nullFilter }}</span>
+                        <input type="text" ng-model="vm.editProfile.lastname" ng-if="vm.editFlag">
                     </div>
 
                 </div>
@@ -30,8 +30,8 @@
                 <div class="info-container">
                     <h6>username</h6>
                     <div class="content">
-                        <span ng-hide="vm.editFlag">{{vm.EditProfile.username | nullFilter}}</span>
-                        <input type="text" ng-model="vm.EditProfile.username" ng-if="vm.editFlag">
+                        <span ng-hide="vm.editFlag">{{vm.editProfile.username | nullFilter}}</span>
+                        <input type="text" ng-model="vm.editProfile.username" ng-if="vm.editFlag">
                     </div>
                 </div>
             </li>
@@ -40,9 +40,9 @@
     <div class="profile-actions">
 
         <i class="fa fa-file" ng-click="vm.selectProfilePhoto()"></i>
-        <i class="fa fa-pencil" ng-click="vm.editFlag = !vm.editFlag"></i>
-        <i class="fa fa-check"></i>
-        <i class="fa fa-remove"></i>
+        <i class="fa fa-pencil" ng-show="!vm.editFlag" ng-click="vm.editFlag = !vm.editFlag"></i>
+        <i class="fa fa-check" ng-if="vm.photoEdited || vm.editFlag" ng-click="vm.saveProfile()"></i>
+        <i class="fa fa-remove" ng-if="vm.photoEdited || vm.editFlag" ng-click="vm.resetProfile()"></i>
     </div>
 </div>
 <firebase-photo ng-if="vm.selectPhoto"></firebase-photo>

@@ -13,6 +13,7 @@ function registerAllAttributeDirectives(app){
     //back img directive
     const backImg = require("./ab.back.img.directive");
     backImg(app);
+    
 }
 
 module.exports = registerAllAttributeDirectives;

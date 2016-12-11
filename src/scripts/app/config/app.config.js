@@ -13,6 +13,7 @@ function appConfigModule(app, firebase) {
 
 
 
+
     //initialize firebase
     require("../firebase/firebase.config")(firebase);
 

@@ -11,7 +11,9 @@ function nullFilterModule(app){
                 if(input == ""){
                     return "not set";
                 }
+                return input;
             }
+
         };
     }
 
