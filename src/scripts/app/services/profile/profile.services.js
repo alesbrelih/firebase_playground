@@ -1,36 +1,111 @@
 function profileServicesModule(app){
 
-    function profileServiceController($firebaseRef,$firebaseArray,Auth,$state,MainState){
+    function profileServiceController($firebaseRef,$firebaseObject,$firebaseArray,Auth,$state,MainState,FirebaseStorage,$q){
 
         //profile object
         let profileObject = null;
 
+        //profile photos
+        let profilePhotos = null;
+
+        //profile uid
+        let p_uid = null;
+
+        //promise for profile photo select
+        let promisePhotoSelect = null;
+
+        //function that sets ref to profilePhotos
+        function getProfilePhotos(){
+            profilePhotos = $firebaseArray($firebaseRef.profilePhotos.child(p_uid));
+
+        }
+
+
         //returned profile factory
         const profileFactory = {};
 
-        //profile db ref
-        const profileDbRef = $firebaseArray($firebaseRef.profiles);
+
 
         //gets profileInfo
         profileFactory.GetProfile = uid=>{
 
+            //set puid
+            p_uid = uid;
+
             //sets profile object data
-            profileObject = profileDbRef.$getRecord(uid);
+            profileObject = $firebaseObject;
 
-
+            //gets profile photos
+            getProfilePhotos();
         };
 
-        //sets profileInfo
-        profileFactory.CreateProfile = profile =>{
-            profileDbRef.child(profileObject.uid).set({
-                name:profile.name,
-                lastname:profile.lastname,
-                username:profile.username
-            });
+        //uploads new profilePhoto
+        profileFactory.UploadProfilePhoto = photo =>{
+
+            //calls storage service
+            FirebaseStorage.UploadProfilePhoto(photo,p_uid)
+                .then(snap => {
+
+
+                    //get if entry with same filename was added
+                    const entryId = profilePhotos.filter(item => {
+                        return item.name == photo.name;
+                    }).map(item=>{
+                        return item.$id;
+                    });
+
+                    //photo with same name was already saved
+                    if (entryId.length == 1)
+                    {
+                        let photoDbEntry = profilePhotos.$getRecord(entryId[0]);
+                        photoDbEntry.url = snap.downloadURL;
+                        profilePhotos.$save(photoDbEntry);
+
+                    }
+                    else{
+                        //save downloadUrl to db and photo with same name wasnt already uploaded
+                        profilePhotos
+                            .$add({
+                                name:photo.name,
+                                url:snap.downloadURL
+                            })
+                            .then(ref=>{
+                                console.log("Added photo ref to db",ref);
+                            });
+                    }
+
+
+                })
+                .catch(err => {
+                    console.error("Error: ",err);
+                });
+        };
+
+        //remove profilephoto
+        profileFactory.RemoveProfilePhoto = photo =>{
+
+            FirebaseStorage.RemoveProfilePhoto(photo,p_uid)
+                .then(()=>{
+                    var photoDb = profilePhotos
+                        .filter(item => {
+                            return item.name == photo.name;
+                        });
+                    console.log(photoDb);
+                    if(photoDb.length == 1){
+                        profilePhotos.$remove(photoDb[0])
+                            .then( () =>{
+                                console.log("Profile photo removed.");
+                            });
+                    }
+
+
+                }).catch(err=>{
+                    console.error("Error",err);
+                });
         };
 
         //edit profileInfo
-        profileFactory.EditProfile = profile => {
+        profileFactory.SetProfile = profile => {
             profileDbRef.child(profileObject.uid).set({
                 name: profile.name,
                 lastname:profile.surname,
@@ -100,12 +175,37 @@ function profileServicesModule(app){
 
         };
 
+        //return profilePhotos
+        profileFactory.ReturnProfilePhotos = ()=>{
+            return profilePhotos;
+        };
+
+        ////////////////////////////////////////////////////////////////////////
+        // --------- PROMISE METHODS FOR PROFILE PHOTO SELECTION OPEN ------ ///
+        ////////////////////////////////////////////////////////////////////////
+        
+        //opens profile photo selection
+        profileFactory.OpenProfilePhotoSelect = ()=>{
+            promisePhotoSelect = $q.defer();
+            return promisePhotoSelect.promise;
+        };
+
+        //reject promise
+        profileFactory.RejectProfilePhotoSelect = ()=>{
+            promisePhotoSelect.reject();
+        };
+
+        //resolve promise
+        profileFactory.ResolveProfilePhotoSelect = photo => {
+            promisePhotoSelect.resolve(photo.url);
+        };
+
         //return factory
         return profileFactory;
 
 
     }
-    profileServiceController.$inject = ["$firebaseRef","$firebaseArray","Auth","$state","MainState"];
+    profileServiceController.$inject = ["$firebaseRef","$firebaseObject","$firebaseArray","Auth","$state","MainState","FirebaseStorage","$q"];
 
     app.factory("ProfileService",profileServiceController);
 

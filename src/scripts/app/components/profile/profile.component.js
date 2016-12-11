@@ -6,6 +6,9 @@ function profileComponentModule(app){
 
         const vm = this;
 
+        //select photo flag to shwo modal
+        vm.selectPhoto = false;
+
         //profile from db
         vm.Profile = ProfileService.ReturnProfile();
 
@@ -16,6 +19,20 @@ function profileComponentModule(app){
         //     username:vm.Profile.username
         // };
         vm.EditProfile = null;
+
+        //select profile photo
+        vm.selectProfilePhoto = ()=>{
+            vm.selectPhoto = true;
+            const modal= ProfileService.OpenProfilePhotoSelect();
+            modal.then(photoUrl=>{
+                console.log(photoUrl);
+                vm.selectPhoto = false;
+            })
+            .catch(err=>{
+                console.error("Error",err);
+                vm.selectPhoto = false;
+            });
+        };
 
 
 

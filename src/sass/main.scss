@@ -41,6 +41,9 @@ div[ui-view]{
     align-items: center;
 }
 
+//import spinner styles
+@import "./spinner/_spinner.scss";
+
 //import auth styles
 @import "./auth/_auth.scss";
 

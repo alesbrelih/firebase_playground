@@ -1,4 +1,6 @@
 firebase-photo{
+
+
     //testing
     position:fixed;
     background-color:rgba($gray-lightest,0.9);
@@ -11,8 +13,8 @@ firebase-photo{
     @include flex-container-centered-column();
 
     .firebase-photo-wrapper{
-        margin:10px;
-        min-height: 500px;
+        margin:20px;
+        //min-height: 500px;
         max-width: 400px;
         width:100%;
         background-color:white;
@@ -21,9 +23,26 @@ firebase-photo{
 
         @include flex-container-centered-column();
 
+        .close-action{
+            align-self: stretch;
+            text-align: right;
+            padding:20px 20px 0px 0px;
+            i{
+                font-size:1.4em;
+                color:$yellow-theme;
+                cursor: pointer;
+                transition:all 150ms ease-in-out;
+                &:hover{
+                    transform:scale(1.1);
+                }
+            }
+
+        }
+
         .existing-photos{
-            padding:20px;
+            padding:0px 20px 20px 20px;
             overflow-y: auto;
+            border-bottom:1px solid $gray-light;
             h6{
                 @include custom-h6-title();
             }
@@ -54,7 +73,6 @@ firebase-photo{
         .upload-new{
             padding:20px;
             align-self: stretch;
-            border-top:1px solid $gray-light;
             @include flex-container-centered-column();
 
 

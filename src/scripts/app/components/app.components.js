@@ -46,6 +46,10 @@ function registerAllComponentsModule(app){
     const firebasePhotoComponent = require("./firebase-photo/firebase.photo.component");
     firebasePhotoComponent(app);
 
+    //spinner component
+    const spinnerComponent = require("./spinner/spinner.component");
+    spinnerComponent(app);
+
 
 
 }

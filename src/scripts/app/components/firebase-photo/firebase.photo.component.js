@@ -2,34 +2,58 @@
 function firebasePhotoComponentModule(app){
 
     //controller
-    function firebasePhotoComponentController(FirebaseStorage,$rootScope,UploadStatus,$scope){
+    function firebasePhotoComponentController(ProfileService,$rootScope,UploadStatus,$scope){
         const vm = this;
+
+        vm.uploading = false;
+
+        vm.profilePhotos = ProfileService.ReturnProfilePhotos();
 
         //set event catcher
         $rootScope.$on(UploadStatus.success,function(){
             $scope.$apply(function(){
                 vm.Photo = null;
                 vm.previewSrc = null;
+                vm.uploading = false;
             });
 
         });
-        
 
 
-        FirebaseStorage.GetProfilePhotos();
+
+        //FirebaseStorage.GetProfilePhotos();
 
         //upload photo
         vm.UploadPhoto = ()=>{
             if(vm.Photo != null){
-                FirebaseStorage.UploadProfilePhoto(vm.Photo);
-
+                vm.uploading = true;
+                ProfileService.UploadProfilePhoto(vm.Photo);
             }
+        };
+
+        //select photo
+        vm.SelectPhoto = photo =>{
+            if(photo){
+                ProfileService.ResolveProfilePhotoSelect(photo);
+            }
+        };
+
+        //remove photo
+        vm.RemovePhoto = (photo) =>{
+            if(photo != null){
+                ProfileService.RemoveProfilePhoto(photo);
+            }
+        };
+
+        //close window
+        vm.CloseWindow = ()=>{
+            ProfileService.RejectProfilePhotoSelect();
         };
 
 
 
     }
-    firebasePhotoComponentController.$inject = ["FirebaseStorage","$rootScope","UploadStatus","$scope"];
+    firebasePhotoComponentController.$inject = ["ProfileService","$rootScope","UploadStatus","$scope"];
 
     //register component
     app.component("firebasePhoto",{

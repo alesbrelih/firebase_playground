@@ -1,40 +1,21 @@
 <div class="firebase-photo-wrapper">
-    <div class="existing-photos">
+    <div class="close-action">
+        <i class="fa fa-close" ng-click="vm.CloseWindow()"></i>
+    </div>
+    <div class="existing-photos" ng-if="vm.profilePhotos.length>0">
         <h6>
             existing photos
         </h6>
 
         <ul>
-            <li>
+            <li ng-repeat="photo in vm.profilePhotos">
                 <div class="existing-photo">
                     <div class="img-container">
-                        <img src="http://www.familyfriendlyfrugality.com/wp-content/uploads/2013/12/Photo-Blanket.jpg" alt="">
+                        <img ng-src="{{photo.url}}" alt="">
                     </div>
                     <div class="img-select">
-                        <button class="button button-primary fa fa-check"></button>
-                        <button class="button button-primary fa fa-remove"></button>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="existing-photo">
-                    <div class="img-container">
-                        <img src="http://www.familyfriendlyfrugality.com/wp-content/uploads/2013/12/Photo-Blanket.jpg" alt="">
-                    </div>
-                    <div class="img-select">
-                        <button class="button button-primary fa fa-check"></button>
-                        <button class="button button-primary fa fa-remove"></button>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="existing-photo">
-                    <div class="img-container">
-                        <img src="http://www.familyfriendlyfrugality.com/wp-content/uploads/2013/12/Photo-Blanket.jpg" alt="">
-                    </div>
-                    <div class="img-select">
-                        <button class="button button-primary fa fa-check"></button>
-                        <button class="button button-primary fa fa-remove"></button>
+                        <button type="button" class="button button-primary fa fa-check" ng-click="vm.SelectPhoto(photo)"></button>
+                        <button type="button" class="button button-primary fa fa-remove" ng-click="vm.RemovePhoto(photo)"></button>
                     </div>
                 </div>
             </li>
@@ -44,14 +25,15 @@
         <h6 ng-class="{'bot-margin-20':vm.Photo == null}">
             upload more
         </h6>
-        <div class="preview-photo-container" ng-if="vm.Photo != null">
+        <div class="preview-photo-container" ng-if="vm.Photo != null && vm.uploading == false">
             <img ng-src="{{vm.previewSrc}}" alt="New photo">
         </div>
+        <ab-spinner ng-show="vm.uploading"></ab-spinner>
         <label class="button button-primary" ng-hide="vm.Photo != null">
             <i class="fa fa-photo"></i>
             <input ng-model="vm.Photo" ab-photo-upload ab-img-preview="vm.previewSrc" id="uploadBtn" hidden type="file">
         </label>
-        <div class="photo-actions" ng-if="vm.Photo != null">
+        <div class="photo-actions" ng-if="vm.Photo != null && vm.uploading == false">
             <button type="button" class="button button-primary" ng-click="vm.UploadPhoto()"><i class="fa fa-plus"></i></button>
             <button type="button" class="button" ng-click="vm.Photo = null"><i class="fa fa-remove"></i></button>
         </div>

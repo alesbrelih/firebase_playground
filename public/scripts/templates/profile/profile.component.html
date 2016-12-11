@@ -39,9 +39,10 @@
     </div>
     <div class="profile-actions">
 
-        <i class="fa fa-file"></i>
+        <i class="fa fa-file" ng-click="vm.selectProfilePhoto()"></i>
         <i class="fa fa-pencil" ng-click="vm.editFlag = !vm.editFlag"></i>
         <i class="fa fa-check"></i>
         <i class="fa fa-remove"></i>
     </div>
 </div>
+<firebase-photo ng-if="vm.selectPhoto"></firebase-photo>

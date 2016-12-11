@@ -7,21 +7,28 @@ function firebaseStorageModule(app){
         const firebaseStorageFactory = {};
 
         //privates
-        const firebaseUserUid = Auth.$getAuth().uid;
         const firebaseStorageRef = Firebase.storage().ref();
 
         //publics
 
         //upload profile photo to storage
-        firebaseStorageFactory.UploadProfilePhoto = photo =>{
+        firebaseStorageFactory.UploadProfilePhoto = (photo,uid) =>{
 
-            return firebaseStorageRef.child(`profile-photos/${firebaseUserUid}/${photo.name}`)
+
+            return firebaseStorageRef.child(`profile-photos/${uid}/${photo.name}`)
                 .put(photo).then(function(snapshot) {
                     $rootScope.$broadcast(UploadStatus.success);
-
-                    console.log("Uploaded a blob or file!",snapshot);
-
+                    return snapshot;
                 });
+        };
+
+        //remove profile photo from storage
+        firebaseStorageFactory.RemoveProfilePhoto = (photo,uid) =>{
+            // Create a reference to the file to delete
+            var removeRef = firebaseStorageRef.child(`profile-photos/${uid}/${photo.name}`);
+
+            // Delete the file
+            return removeRef.delete();
         };
 
 

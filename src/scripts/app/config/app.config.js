@@ -22,7 +22,8 @@ function appConfigModule(app, firebase) {
         //firebase default url
         $firebaseRefProvider.registerUrl({
             default: FirebaseUrl,
-            profiles: FirebaseUrl + "profiles"
+            profiles: FirebaseUrl + "profiles",
+            profilePhotos:FirebaseUrl+"profile-photos"
         });
         //auth states
         $stateProvider
@@ -47,7 +48,7 @@ function appConfigModule(app, firebase) {
                 abstract:true,
                 template: "<main></main>",
                 resolve: {
-                    profileInstance: ["Auth", function (Auth) {
+                    Authentication: ["Auth", function (Auth) {
                         return Auth.$requireSignIn();
                     }]
                 }
@@ -56,7 +57,14 @@ function appConfigModule(app, firebase) {
             // ---- profile route ---- //
             .state("main.profile",{
                 url:"/profile",
-                template:"<profile></profile>"
+                template:"<profile></profile>",
+                resolve:{
+                    Profile:["ProfileService","Auth",function(ProfileService,Auth){
+                        return Auth.$requireSignIn();
+
+
+                    }]
+                }
             });
 
 

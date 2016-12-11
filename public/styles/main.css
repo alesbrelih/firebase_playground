@@ -3079,6 +3079,35 @@ div[ui-view] {
   justify-content: center;
   align-items: center; }
 
+.spinner, .spinner:before {
+  box-sizing: border-box; }
+
+.spinner {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #fbfbfb;
+  position: relative;
+  margin: 40px; }
+  .spinner:after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 100px;
+    height: 100px;
+    border: 4px solid transparent;
+    border-top-color: #E0BE04;
+    border-bottom-color: #3D3D3B;
+    border-radius: 50%;
+    animation: spin 2000ms ease-in-out infinite;
+    background: transparent; }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
 .register-wrapper, .login-wrapper {
   display: flex;
   width: 300px;
@@ -3301,8 +3330,7 @@ firebase-photo {
   align-items: center;
   flex-direction: column; }
   firebase-photo .firebase-photo-wrapper {
-    margin: 10px;
-    min-height: 500px;
+    margin: 20px;
     max-width: 400px;
     width: 100%;
     background-color: white;
@@ -3312,9 +3340,21 @@ firebase-photo {
     justify-content: center;
     align-items: center;
     flex-direction: column; }
+    firebase-photo .firebase-photo-wrapper .close-action {
+      align-self: stretch;
+      text-align: right;
+      padding: 20px 20px 0px 0px; }
+      firebase-photo .firebase-photo-wrapper .close-action i {
+        font-size: 1.4em;
+        color: #E0BE04;
+        cursor: pointer;
+        transition: all 150ms ease-in-out; }
+        firebase-photo .firebase-photo-wrapper .close-action i:hover {
+          transform: scale(1.1); }
     firebase-photo .firebase-photo-wrapper .existing-photos {
-      padding: 20px;
-      overflow-y: auto; }
+      padding: 0px 20px 20px 20px;
+      overflow-y: auto;
+      border-bottom: 1px solid #d1d1d1; }
       firebase-photo .firebase-photo-wrapper .existing-photos h6 {
         margin-bottom: 5px;
         color: #E0BE04;
@@ -3339,7 +3379,6 @@ firebase-photo {
     firebase-photo .firebase-photo-wrapper .upload-new {
       padding: 20px;
       align-self: stretch;
-      border-top: 1px solid #d1d1d1;
       display: flex;
       justify-content: center;
       align-items: center;
