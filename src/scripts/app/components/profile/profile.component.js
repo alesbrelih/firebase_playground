@@ -18,7 +18,7 @@ function profileComponentModule(app){
         //     lastname:vm.Profile.lastname,
         //     username:vm.Profile.username
         // };
-        vm.EditProfile = null;
+        vm.EditProfile = {};
 
         //select profile photo
         vm.selectProfilePhoto = ()=>{
@@ -26,6 +26,7 @@ function profileComponentModule(app){
             const modal= ProfileService.OpenProfilePhotoSelect();
             modal.then(photoUrl=>{
                 console.log(photoUrl);
+                vm.EditProfile.photo = photoUrl;
                 vm.selectPhoto = false;
             })
             .catch(err=>{
