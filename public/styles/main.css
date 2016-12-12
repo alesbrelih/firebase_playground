@@ -3425,6 +3425,12 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
   margin-top: 40px;
   margin-bottom: 40px; }
 
+@media (max-width: 960px) {
+  .main-container {
+    margin-left: 10px;
+    margin-right: 10px;
+    width: auto; } }
+
 /*  RESPONSIVNESS */
 @media (max-width: 700px) {
   .navbar h3 {
@@ -3441,11 +3447,7 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
   .navbar .actions-collapsed {
     display: block; }
   .navbar-links ul {
-    margin-right: 5px; }
-  .main-container {
-    margin-left: 10px;
-    margin-right: 10px;
-    width: auto; } }
+    margin-right: 5px; } }
 
 .profile-wrapper {
   display: flex;

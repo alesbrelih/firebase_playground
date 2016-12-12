@@ -201,7 +201,13 @@
     //bg color
     //background-color:white;
 }
-
+@media(max-width:960px){
+    .main-container{
+        margin-left:10px;
+        margin-right:10px;
+        width:auto;
+    }
+}
 /*  RESPONSIVNESS */
 @media (max-width:700px){
     .navbar{
@@ -231,10 +237,5 @@
         ul{
             margin-right:5px;
         }
-    }
-    .main-container{
-        margin-left:10px;
-        margin-right:10px;
-        width:auto;
     }
 }
