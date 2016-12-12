@@ -7,6 +7,7 @@ chat-main{
     align-items: stretch;
 
     .main{
+
         flex:1;
 
         //for test / development
@@ -30,11 +31,24 @@ chat-main{
             justify-content: flex-start;
             flex-wrap: wrap;
             width:100%;
+            position:relative;
 
 
 
             //bg color
             background-color:$black-theme;
+
+            i.fa-remove{
+                position:absolute;
+                top:10px;
+                right:10px;
+                color:$gray-dark;
+                cursor: pointer;
+
+                &:hover{
+                    color:$gray-light;
+                }
+            }
 
             .chat-tab{
                 padding:10px 20px;
@@ -154,7 +168,7 @@ chat-main{
                     flex:1;
 
                     //min width
-                    min-width: 400px;
+                    //min-width: 400px;
 
                     //display flex so it can be separate into
                     //main container and input container
@@ -200,6 +214,9 @@ chat-main{
 
                         button{
                             padding:10px 30px;
+                            &:active{
+                                transform: scale(0.95);
+                            }
 
                         }
                     }
@@ -372,7 +389,11 @@ chat-main{
         .main{
 
             .tabs{
-                display:none;
+                padding:20px;
+                div{
+                    font-size:0.9em;
+                }
+
             }
             .window-container{
                 .join-room{
@@ -387,9 +408,7 @@ chat-main{
                         height:100%;
                         border-top-color: transparent;
                     }
-                    .chat-window{
-                        min-width: 100px;
-                    }
+
                 }
             }
         }

@@ -3629,7 +3629,16 @@ chat-main {
       justify-content: flex-start;
       flex-wrap: wrap;
       width: 100%;
+      position: relative;
       background-color: #3D3D3B; }
+      .chat-container .main .tabs i.fa-remove {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #b8b8b8;
+        cursor: pointer; }
+        .chat-container .main .tabs i.fa-remove:hover {
+          color: #d1d1d1; }
       .chat-container .main .tabs .chat-tab {
         padding: 10px 20px;
         color: white;
@@ -3681,7 +3690,6 @@ chat-main {
         position: relative; }
         .chat-container .main .window-container .chat-wrapper .chat-window {
           flex: 1;
-          min-width: 400px;
           display: flex;
           flex-direction: column;
           align-items: stretch; }
@@ -3703,6 +3711,8 @@ chat-main {
               color: white; }
             .chat-container .main .window-container .chat-wrapper .chat-window .chat-input button {
               padding: 10px 30px; }
+              .chat-container .main .window-container .chat-wrapper .chat-window .chat-input button:active {
+                transform: scale(0.95); }
           .chat-container .main .window-container .chat-wrapper .chat-window div[ui-view] {
             flex: 1;
             background-color: #fbfbfb; }
@@ -3767,7 +3777,9 @@ chat-main {
   .chat-container {
     width: 100%; }
     .chat-container .main .tabs {
-      display: none; }
+      padding: 20px; }
+      .chat-container .main .tabs div {
+        font-size: 0.9em; }
     .chat-container .main .window-container .join-room {
       display: none; }
     .chat-container .main .window-container .chat-wrapper .room-users {
@@ -3777,8 +3789,6 @@ chat-main {
       right: 0px;
       height: 100%;
       border-top-color: transparent; }
-    .chat-container .main .window-container .chat-wrapper .chat-window {
-      min-width: 100px; }
     .chat-container .actions-collapsed {
       display: block; } }
 
