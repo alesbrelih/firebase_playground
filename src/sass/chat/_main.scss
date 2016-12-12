@@ -1,4 +1,5 @@
 chat-main{
+    max-width: 100%;
     width:100%;
 }
 .chat-container{
@@ -349,6 +350,7 @@ chat-main{
 
             border:2px solid $yellow-theme;
 
+            box-sizing: border-box;
 
             //bg and color
             background-color:$black-theme;
@@ -383,14 +385,14 @@ chat-main{
 }
 
 
-@media(max-width:550px){
+@media(max-width:700px){
     .chat-container{
-        width:100%;
         .main{
-
             .tabs{
-                padding:20px;
-                div{
+                padding:30px 10px 20px 10px;
+                .chat-tab{
+                    padding:0px 10px;
+                    margin-top:5px;
                     font-size:0.9em;
                 }
 
@@ -400,6 +402,18 @@ chat-main{
                     display:none;
                 }
                 .chat-wrapper{
+                    .chat-window{
+                        .chat-input{
+                            input{
+                                margin-right:10px;
+                                font-size:0.9em;
+
+                            }
+                            button{
+                                padding:5px 10px;
+                            }
+                        }
+                    }
                     .room-users{
                         display:none;
                         position:absolute;

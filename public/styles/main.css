@@ -3429,7 +3429,8 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
   .main-container {
     margin-left: 10px;
     margin-right: 10px;
-    width: auto; } }
+    width: auto;
+    max-width: 100%; } }
 
 /*  RESPONSIVNESS */
 @media (max-width: 700px) {
@@ -3607,6 +3608,7 @@ firebase-photo {
         font-size: 1.4em; }
 
 chat-main {
+  max-width: 100%;
   width: 100%; }
 
 .chat-container {
@@ -3761,6 +3763,7 @@ chat-main {
       padding: 10px 20px;
       margin-top: 10px;
       border: 2px solid #E0BE04;
+      box-sizing: border-box;
       background-color: #3D3D3B;
       color: white;
       cursor: pointer; }
@@ -3773,23 +3776,28 @@ chat-main {
       color: #3D3D3B;
       background-color: #E0BE04; }
 
-@media (max-width: 550px) {
-  .chat-container {
-    width: 100%; }
-    .chat-container .main .tabs {
-      padding: 20px; }
-      .chat-container .main .tabs div {
-        font-size: 0.9em; }
-    .chat-container .main .window-container .join-room {
-      display: none; }
-    .chat-container .main .window-container .chat-wrapper .room-users {
-      display: none;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-      height: 100%;
-      border-top-color: transparent; }
-    .chat-container .actions-collapsed {
-      display: block; } }
+@media (max-width: 700px) {
+  .chat-container .main .tabs {
+    padding: 30px 10px 20px 10px; }
+    .chat-container .main .tabs .chat-tab {
+      padding: 0px 10px;
+      margin-top: 5px;
+      font-size: 0.9em; }
+  .chat-container .main .window-container .join-room {
+    display: none; }
+  .chat-container .main .window-container .chat-wrapper .chat-window .chat-input input {
+    margin-right: 10px;
+    font-size: 0.9em; }
+  .chat-container .main .window-container .chat-wrapper .chat-window .chat-input button {
+    padding: 5px 10px; }
+  .chat-container .main .window-container .chat-wrapper .room-users {
+    display: none;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    border-top-color: transparent; }
+  .chat-container .actions-collapsed {
+    display: block; } }
 
 /*# sourceMappingURL=main.css.map */
