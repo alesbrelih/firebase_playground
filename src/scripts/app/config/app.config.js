@@ -5,7 +5,7 @@
 function appConfigModule(app, firebase) {
     app.constant("Firebase",firebase);
     app.constant("FirebaseUrl", "https://scakapo-2f1c6.firebaseio.com/");
-    app.constant("MainState","main.profile");
+    app.constant("MainState","main.chat");
     app.constant("UploadStatus",{
         error:"error uploading",
         success:"upload successful"
@@ -66,6 +66,11 @@ function appConfigModule(app, firebase) {
 
                     }]
                 }
+            })
+            // ---- chat route ---- //
+            .state("main.chat",{
+                url:"/chat",
+                template:"<chat-main></chat-main>"
             });
 
 

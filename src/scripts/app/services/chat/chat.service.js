@@ -17,3 +17,4 @@ function chatServiceModule(app){
 }
 
 //export service module
+module.exports = chatServiceModule;

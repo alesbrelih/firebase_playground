@@ -1,7 +1,401 @@
+chat-main{
+    width:100%;
+}
+.chat-container{
 
-// --- private chat window styles --- //
-@import "./_private.scss";
+    display:flex;
+    align-items: stretch;
+
+    .main{
+        flex:1;
+
+        //for test / development
+        width:100%;
 
 
-// --- public chat window styles --- //
-@import "./_public.scss";
+        // border
+        border:2px solid $black-theme;
+        box-shadow: 0px 0px 0px 2px $yellow-theme;
+
+        //bg color:
+        background-color: white;
+
+
+        //flexed and centered
+        @include flex-container-centered-column();
+
+        .tabs{
+            //display
+            @include flex-container-centered-row();
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            width:100%;
+
+
+
+            //bg color
+            background-color:$black-theme;
+
+            .chat-tab{
+                padding:10px 20px;
+                color:white;
+                cursor: pointer;
+
+                &.messages{
+                    color:$yellow-theme;
+                }
+                &.messages:hover,&:hover,&.active{
+                    background-color:$yellow-theme;
+                    color:$black-theme;
+                }
+            }
+
+        }
+
+        // window container
+        .window-container{
+
+            //expand wrapper
+            flex:1;
+
+            //stretch width
+            align-self: stretch;
+
+            //join room top container
+            .join-room{
+
+                //relative so close is absolute top
+                position:relative;
+
+                //display flex for content
+                display:flex;
+                justify-content: flex-start;
+                align-items: center;
+
+                //width 100%;
+                width:100%;
+
+                //padding
+                padding:20px 20px 20px 20px;
+
+                //bg color
+                background-color:$black-theme;
+
+                //input styles for add room
+                input{
+                    //margin
+                    margin-bottom:0px;
+                    margin-right:20px;
+
+                    //bg
+                    background-color:$black-theme;
+
+                    //color
+                    color:white;
+
+                    //border
+                    border:none;
+                    border-radius:0px;
+                    border-bottom:1px solid $gray-dark;
+
+                    //font size
+                    font-size:0.9em;
+
+                }
+                //styles for plus sign
+                i{
+                    //padding margin
+                    margin-right:5px;
+                    padding:10px;
+
+                    //color
+                    color:$yellow-theme;
+
+                    //cursor
+                    cursor:pointer;
+                }
+
+                //remove sign styles
+                i.fa-remove{
+
+                    //absolute and top right
+                    position:absolute;
+                    right:0px;
+                    top:0px;
+
+                    //color
+                    color:$gray-dark;
+
+                    //cursor
+                    cursor:pointer;
+
+                    //hover
+                    &:hover{
+                        color:$gray-light;
+                    }
+                }
+
+            }
+
+            //main chat wrapper with windows and user list
+            .chat-wrapper{
+                //min height
+                min-height: 400px;
+                @include flex-container-centered-row();
+                //stretch items
+                align-items: stretch;
+
+                position:relative;
+
+                //chat window - container for components
+                .chat-window{
+
+                    //takes existing space
+                    flex:1;
+
+                    //min width
+                    min-width: 400px;
+
+                    //display flex so it can be separate into
+                    //main container and input container
+                    display:flex;
+                    flex-direction: column;
+                    align-items: stretch;
+
+                    //input container
+                    .chat-input{
+                        //flex so it can be separate into input and submit btn
+                        @include flex-container-centered-row();
+
+                        //padding
+                        padding:20px 20px 10px 20px;
+
+                        //bg
+                        background-color:$black-theme;
+
+                        //border top
+                        border-top:1px solid $gray-dark;
+
+                        //input styles
+                        input{
+                            //margings
+                            margin-bottom:10px;
+                            margin-right:20px;
+
+                            //bg color
+                            background-color:$black-theme;
+
+                            //takes existing space
+                            flex:1;
+
+                            //border
+                            border:none;
+                            border-radius: 0px;
+                            border-bottom: 1px solid $gray-dark;
+
+                            //color
+                            color:white;
+
+                        }
+
+                        button{
+                            padding:10px 30px;
+
+                        }
+                    }
+
+                    //main container for components
+                    div[ui-view]{
+                        flex:1;
+                        background-color:$gray-lightest;
+                    }
+                }
+
+                //room users
+                .room-users{
+
+                    //bg
+                    background-color:$black-theme;
+
+                    //border
+                    border:1px solid $gray-dark;
+                    border-right-color: transparent;
+                    border-bottom-color: transparent;
+
+                    //display / size
+                    min-width: 200px;
+                    padding:20px;
+
+                    //remove sign styles
+                    i.fa-remove{
+
+                        //absolute and top right
+                        position:absolute;
+                        right:0px;
+                        top:0px;
+
+                        padding-top:20px;
+                        padding-right:20px;
+
+                        //color
+                        color:$gray-dark;
+
+                        //cursor
+                        cursor:pointer;
+
+                        //hover
+                        &:hover{
+                            color:$gray-light;
+                        }
+                    }
+
+                    //list of users
+                    ul{
+                        //no lists tyle
+                        list-style-type: none;
+                        margin-top:20px;
+
+                        //every user
+                        li{
+                            //extra margin
+                            margin-bottom: 10px;
+
+                            //default font color
+                            color:$gray-dark;
+
+                            //user
+                            .user{
+                                //user data container
+                                display:flex;
+                                align-items: center;
+                                width:100%;
+
+                                //both child styles
+                                div{
+                                    //extra padding
+                                    padding-left:10px;
+                                    padding-right:10px;
+
+                                    //cursor
+                                    cursor: pointer;
+
+                                    //on hover
+                                    &:hover{
+                                        color:$gray-light;
+                                    }
+                                }
+
+
+                                //name styles
+                                .name{
+                                    //take remaining space
+                                    flex:1
+                                }
+
+                                //current logged user styles
+                                &.active{
+                                    color:$yellow-theme;
+                                    pointer-events: none;
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+    }
+
+
+    // --- private chat window styles --- //
+    @import "./_private.scss";
+
+
+    // --- public chat window styles --- //
+    @import "./_public.scss";
+
+
+    .actions-collapsed
+    {
+        display:none;
+
+        align-self: flex-start;
+
+        .tabs-collapsed, .join-collapsed, .people-collapsed{
+
+
+            //bigger
+            padding:10px 20px;
+
+            margin-top:10px;
+
+            border:2px solid $yellow-theme;
+
+
+            //bg and color
+            background-color:$black-theme;
+            color:white;
+
+            //cursor
+            cursor: pointer;
+
+
+
+            //on hover style
+            &:hover{
+                color:$black-theme;
+                background-color:$yellow-theme;
+            }
+
+
+
+        }
+        .tabs-collapsed{
+            //when new msg
+            &.messages{
+                color:$yellow-theme;
+            }
+            &.messages:hover{
+                color:$black-theme;
+                background-color:$yellow-theme;
+            }
+        }
+    }
+
+}
+
+
+@media(max-width:550px){
+    .chat-container{
+        width:100%;
+        .main{
+
+            .tabs{
+                display:none;
+            }
+            .window-container{
+                .join-room{
+                    display:none;
+                }
+                .chat-wrapper{
+                    .room-users{
+                        display:none;
+                        position:absolute;
+                        top:0px;
+                        right:0px;
+                        height:100%;
+                        border-top-color: transparent;
+                    }
+                    .chat-window{
+                        min-width: 100px;
+                    }
+                }
+            }
+        }
+        .actions-collapsed{
+            display:block;
+        }
+
+    }
+}

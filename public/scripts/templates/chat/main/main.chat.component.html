@@ -1,0 +1,98 @@
+<div class="chat-container">
+    <div class="main">
+        <div class="tabs">
+            <div class="chat-tab">Default</div>
+            <div class="chat-tab">Aleš</div>
+            <div class="chat-tab messages">Marjan</div>
+            <div class="chat-tab active">Boris</div>
+        </div>
+
+        <div class="window-container">
+            <div class="join-room">
+                <i class="fa fa-remove"></i>
+                <input type="text" name="" placeholder="Room"> <i class="fa fa-plus"></i>
+            </div>
+            <div class="chat-wrapper">
+                <div class="chat-window">
+                    <div ui-view></div>
+                    <div class="chat-input">
+                        <input type="text" placeholder="Type your message ...">
+                        <button type="button" class="button button-primary fa fa-paper-plane"></button>
+                    </div>
+
+
+                </div>
+                <div class="room-users">
+                    <i class="fa fa-remove"></i>
+                    <ul>
+                        <li>
+                            <div class="user active">
+                                <div class="search">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <div class="name">
+                                    Aleš
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user">
+                                <div class="search">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <div class="name">
+                                    Rok
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user">
+                                <div class="search">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <div class="name">
+                                    Peter
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user">
+                                <div class="search">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <div class="name">
+                                    Jernej
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user">
+                                <div class="search">
+                                    <i class="fa fa-search"></i>
+                                </div>
+                                <div class="name">
+                                    Urban
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="actions-collapsed">
+        <div class="join-collapsed">
+            <i class="fa fa-plus"></i>
+        </div>
+        <div class="tabs-collapsed">
+            <!--<i class="fa fa-envelope-o"></i>-->
+            <i class="fa fa-envelope"></i>
+        </div>
+        <div class="people-collapsed">
+            <i class="fa fa-users"></i>
+        </div>
+
+    </div>
+</div>
