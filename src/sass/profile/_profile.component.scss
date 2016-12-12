@@ -27,9 +27,10 @@
 
             margin:20px;
 
-            width:100px;
-            height:100px;
+            width:200px;
+            height:200px;
             border-radius: 50%;
+        
 
             //background:url("https://ckinknoazoro.files.wordpress.com/2011/06/random.jpg");
             background-position: center;
@@ -117,6 +118,11 @@
         .profile-picture{
             border:none;
             border-bottom:1px solid $gray-light;
+            .rounded-container{
+
+                width:200px;
+                height: 200px;
+            }
         }
         .profile-actions{
             border:none;

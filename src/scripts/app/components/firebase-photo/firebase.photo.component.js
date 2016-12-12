@@ -5,20 +5,26 @@ function firebasePhotoComponentModule(app){
     function firebasePhotoComponentController(ProfileService,$rootScope,UploadStatus,$scope){
         const vm = this;
 
-        vm.uploading = false;
+        //on init
+        vm.$onInit = ()=>{
+            //uploading flag
+            vm.uploading = false;
 
-        vm.profilePhotos = ProfileService.ReturnProfilePhotos();
+            //all profile photos
+            vm.profilePhotos = ProfileService.ReturnProfilePhotos();
 
-        //set event catcher
-        $rootScope.$on(UploadStatus.success,function(){
-            $scope.$apply(function(){
-                vm.Photo = null;
-                vm.previewSrc = null;
-                vm.uploading = false;
+            //set event catcher
+            $rootScope.$on(UploadStatus.success,function(){
+                $scope.$apply(function(){
+                    vm.Photo = null;
+                    vm.previewSrc = null;
+                    vm.uploading = false;
+                });
+
             });
 
-        });
 
+        };
 
 
         //FirebaseStorage.GetProfilePhotos();

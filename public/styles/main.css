@@ -3460,8 +3460,8 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
     align-items: center; }
     .profile-wrapper .profile-picture .rounded-container {
       margin: 20px;
-      width: 100px;
-      height: 100px;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
       background-position: center;
       background-size: cover; }
@@ -3512,6 +3512,9 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
     .profile-wrapper .profile-picture {
       border: none;
       border-bottom: 1px solid #d1d1d1; }
+      .profile-wrapper .profile-picture .rounded-container {
+        width: 200px;
+        height: 200px; }
     .profile-wrapper .profile-actions {
       border: none;
       border-top: 1px solid #d1d1d1; } }

@@ -38,6 +38,25 @@ function registerAllComponentsModule(app){
     profileComponent(app);
 
 
+    /////////////////////////////////
+    // ---- Chat components ------ //
+    /////////////////////////////////
+    
+
+    // main wrapper
+    const chatMainComponent = require("./chat/main/main.chat.component");
+    chatMainComponent(app);
+
+    // private
+    const chatPrivateComponent = require("./chat/private/private.chat.component");
+    chatPrivateComponent(app);
+
+    //public
+    const chatPublicComponent = require("./chat/public/public.chat.component");
+    chatPublicComponent(app);
+
+
+
     //////////////////////////////////
     // ------ Helper components ----//
     //////////////////////////////////

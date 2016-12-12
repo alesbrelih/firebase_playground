@@ -17,6 +17,10 @@ function registerAllServicesModule(app){
     //firebase storage service
     const storageService = require("./firebase-storage/firebase.storage.service");
     storageService(app);
+
+    //chat service
+    const chatService = require("./chat/chat.service");
+    chatService(app);
 }
 
 module.exports = registerAllServicesModule;
