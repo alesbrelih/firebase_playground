@@ -4,7 +4,7 @@
     <div class="actions">
         <span>AB</span>
         <ul>
-            <li class="fa fa-pencil"></li>
+            <li class="fa fa-user" ui-sref="main.profile"></li>
             <li class="fa fa-sign-out" ng-click="vm.signOut()"></li>
         </ul>
     </div>
@@ -12,7 +12,7 @@
         <i class="fa fa-bars" ng-click="vm.showCollapsed = !vm.showCollapsed"></i>
         <div class="collapsed-selection" ng-class="{show:vm.showCollapsed}">
             <ul>
-                <li>Edit</li>
+                <li ui-sref="main.profile">Profile</li>
                 <li ng-click="vm.signOut()">Logout</li>
             </ul>
         </div>
@@ -22,7 +22,7 @@
 </div>
 <div class="navbar-links">
     <ul>
-        <li>Chat</li>
+        <li ui-sref="main.chat">Chat</li>
         <li>Photos</li>
     </ul>
 </div>
