@@ -3412,6 +3412,8 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
       cursor: pointer;
       font-family: 'Nova Script', cursive;
       border-radius: 4px; }
+      .navbar-links ul li.visible-xs {
+        display: none; }
       .navbar-links ul li:hover {
         background-color: #E0BE04;
         color: #3D3D3B; }
@@ -3441,14 +3443,18 @@ input[type="text"][class^=ng-invalid], input[type="email"][class^=ng-invalid], i
 
 @media (max-width: 550px) {
   .navbar h3 {
-    font-size: 2.5rem;
+    font-size: 2.0rem;
     margin-bottom: 0px; }
   .navbar .actions {
     display: none; }
   .navbar .actions-collapsed {
     display: block; }
   .navbar-links ul {
-    margin-right: 5px; } }
+    margin-right: 5px; }
+    .navbar-links ul li {
+      display: none; }
+      .navbar-links ul li.visible-xs {
+        display: inline; } }
 
 .profile-wrapper {
   display: flex;
@@ -3633,12 +3639,17 @@ chat-main {
       width: 100%;
       position: relative;
       background-color: #3D3D3B; }
+      .chat-container .main .tabs.show {
+        display: flex !important; }
       .chat-container .main .tabs i.fa-remove {
+        display: none;
         position: absolute;
         top: 10px;
         right: 10px;
         color: #b8b8b8;
         cursor: pointer; }
+        .chat-container .main .tabs i.fa-remove.show {
+          display: none; }
         .chat-container .main .tabs i.fa-remove:hover {
           color: #d1d1d1; }
       .chat-container .main .tabs .chat-tab {
@@ -3676,6 +3687,7 @@ chat-main {
           color: #E0BE04;
           cursor: pointer; }
         .chat-container .main .window-container .join-room i.fa-remove {
+          display: none;
           position: absolute;
           right: 0px;
           top: 0px;
@@ -3703,6 +3715,7 @@ chat-main {
             background-color: #3D3D3B;
             border-top: 1px solid #b8b8b8; }
             .chat-container .main .window-container .chat-wrapper .chat-window .chat-input input {
+              min-width: 50px;
               margin-bottom: 10px;
               margin-right: 20px;
               background-color: #3D3D3B;
@@ -3726,6 +3739,7 @@ chat-main {
           min-width: 200px;
           padding: 20px; }
           .chat-container .main .window-container .chat-wrapper .room-users i.fa-remove {
+            display: none;
             position: absolute;
             right: 0px;
             top: 0px;
@@ -3778,25 +3792,38 @@ chat-main {
 
 @media (max-width: 700px) {
   .chat-container .main .tabs {
+    display: none;
     padding: 30px 10px 20px 10px; }
     .chat-container .main .tabs .chat-tab {
       padding: 0px 10px;
       margin-top: 5px;
       font-size: 0.9em; }
+    .chat-container .main .tabs i.fa-remove {
+      display: block !important; }
   .chat-container .main .window-container .join-room {
     display: none; }
-  .chat-container .main .window-container .chat-wrapper .chat-window .chat-input input {
-    margin-right: 10px;
-    font-size: 0.9em; }
-  .chat-container .main .window-container .chat-wrapper .chat-window .chat-input button {
-    padding: 5px 10px; }
-  .chat-container .main .window-container .chat-wrapper .room-users {
-    display: none;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    height: 100%;
-    border-top-color: transparent; }
+    .chat-container .main .window-container .join-room.show {
+      display: flex; }
+    .chat-container .main .window-container .join-room i.fa-remove {
+      display: block !important; }
+  .chat-container .main .window-container .chat-wrapper {
+    min-height: 400px; }
+    .chat-container .main .window-container .chat-wrapper .chat-window .chat-input input {
+      margin-right: 10px;
+      font-size: 0.9em; }
+    .chat-container .main .window-container .chat-wrapper .chat-window .chat-input button {
+      padding: 5px 10px; }
+    .chat-container .main .window-container .chat-wrapper .room-users {
+      display: none;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      height: 100%;
+      border-top-color: transparent; }
+      .chat-container .main .window-container .chat-wrapper .room-users.show {
+        display: flex !important; }
+      .chat-container .main .window-container .chat-wrapper .room-users i.fa-remove {
+        display: block !important; }
   .chat-container .actions-collapsed {
     display: block; } }
 

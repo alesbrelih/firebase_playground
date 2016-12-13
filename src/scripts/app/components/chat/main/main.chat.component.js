@@ -6,7 +6,28 @@ function mainChatComponentModule(app){
         //scope
         const vm = this;
 
-        
+        //set private props on init
+        vm.$onInit = ()=>{
+            // 3 options: people, rooms, join
+            vm.sidebar = null;
+        };
+
+        //open sidebar
+        vm.openSide = (sidebar)=>{
+
+            //if sidebar is same then close
+            if(sidebar == vm.sidebar){
+                vm.sidebar = null;
+            }
+            else{
+                //open sidebar
+                vm.sidebar = sidebar;
+            }
+
+        };
+        vm.test=()=>{
+            console.log(vm);
+        };
     }
 
     //register component

@@ -1,7 +1,7 @@
 <div class="chat-container">
     <div class="main">
-        <div class="tabs">
-            <i class="fa fa-remove"></i>
+        <div class="tabs" ng-class="{show:vm.sidebar == 'rooms'}">
+            <i class="fa fa-remove" ng-click="vm.openSide('rooms')"></i>
             <div class="chat-tab">Default</div>
             <div class="chat-tab">Aleš</div>
             <div class="chat-tab messages">Marjan</div>
@@ -10,7 +10,7 @@
 
 
         <div class="window-container">
-            <div class="join-room">
+            <div class="join-room" ng-class="{show:vm.sidebar=='join'}">
                 <i class="fa fa-remove"></i>
                 <input type="text" name="" placeholder="Room"> <i class="fa fa-plus"></i>
             </div>
@@ -24,7 +24,7 @@
 
 
                 </div>
-                <div class="room-users">
+                <div class="room-users" ng-class="{show:vm.sidebar=='people'}">
                     <i class="fa fa-remove"></i>
                     <ul>
                         <li>
@@ -85,14 +85,14 @@
 
     </div>
     <div class="actions-collapsed">
-        <div class="join-collapsed">
+        <div class="join-collapsed" ng-click="vm.openSide('join')">
             <i class="fa fa-plus"></i>
         </div>
-        <div class="tabs-collapsed">
+        <div class="tabs-collapsed" ng-click="vm.openSide('rooms')">
             <!--<i class="fa fa-envelope-o"></i>-->
             <i class="fa fa-envelope"></i>
         </div>
-        <div class="people-collapsed">
+        <div class="people-collapsed" ng-click="vm.openSide('people')">
             <i class="fa fa-users"></i>
         </div>
 

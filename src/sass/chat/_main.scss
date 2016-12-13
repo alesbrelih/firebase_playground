@@ -39,12 +39,21 @@ chat-main{
             //bg color
             background-color:$black-theme;
 
+            &.show{
+                display:flex !important;
+            }
+
             i.fa-remove{
+                display:none;
                 position:absolute;
                 top:10px;
                 right:10px;
                 color:$gray-dark;
                 cursor: pointer;
+
+                &.show{
+                    display:none;
+                }
 
                 &:hover{
                     color:$gray-light;
@@ -133,6 +142,9 @@ chat-main{
                 //remove sign styles
                 i.fa-remove{
 
+                    //none on default screen
+                    display:none;
+
                     //absolute and top right
                     position:absolute;
                     right:0px;
@@ -193,6 +205,7 @@ chat-main{
 
                         //input styles
                         input{
+                            min-width: 50px;
                             //margings
                             margin-bottom:10px;
                             margin-right:20px;
@@ -246,6 +259,9 @@ chat-main{
 
                     //remove sign styles
                     i.fa-remove{
+
+                        //hidden on big screen
+                        display:none;
 
                         //absolute and top right
                         position:absolute;
@@ -389,19 +405,31 @@ chat-main{
     .chat-container{
         .main{
             .tabs{
+                display:none;
                 padding:30px 10px 20px 10px;
                 .chat-tab{
                     padding:0px 10px;
                     margin-top:5px;
                     font-size:0.9em;
                 }
+                //show close on small screens
+                i.fa-remove{
+                   display:block !important;
+                }
 
             }
             .window-container{
                 .join-room{
                     display:none;
+                    &.show{
+                        display:flex;
+                    }
+                    i.fa-remove{
+                        display:block !important;
+                    }
                 }
                 .chat-wrapper{
+                    min-height: 400px;
                     .chat-window{
                         .chat-input{
                             input{
@@ -421,6 +449,12 @@ chat-main{
                         right:0px;
                         height:100%;
                         border-top-color: transparent;
+                        &.show{
+                            display:flex !important;
+                        }
+                        i.fa-remove{
+                            display:block !important;
+                        }
                     }
 
                 }
