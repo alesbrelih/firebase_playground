@@ -1,7 +1,7 @@
 function mainChatComponentModule(app){
 
     //main chat controller
-    function mainChatComponentController(){
+    function mainChatComponentController(ChatService){
 
         //scope
         const vm = this;
@@ -10,6 +10,9 @@ function mainChatComponentModule(app){
         vm.$onInit = ()=>{
             // 3 options: people, rooms, join
             vm.sidebar = null;
+
+            //set chat
+            ChatService.JoinChat();
         };
 
         //open sidebar
@@ -25,10 +28,10 @@ function mainChatComponentModule(app){
             }
 
         };
-        vm.test=()=>{
-            console.log(vm);
-        };
     }
+
+    //inject services
+    mainChatComponentController.$inject = ["ChatService"];
 
     //register component
     app.component("chatMain",{

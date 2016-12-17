@@ -41,7 +41,7 @@ function registerAllComponentsModule(app){
     /////////////////////////////////
     // ---- Chat components ------ //
     /////////////////////////////////
-    
+
 
     // main wrapper
     const chatMainComponent = require("./chat/main/main.chat.component");

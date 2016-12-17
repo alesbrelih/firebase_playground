@@ -24,8 +24,16 @@ function appConfigModule(app, firebase) {
         $firebaseRefProvider.registerUrl({
             default: FirebaseUrl,
             profiles: FirebaseUrl + "profiles",
-            profilePhotos:FirebaseUrl+"profile-photos"
+            profilePhotos:FirebaseUrl+"profile-photos",
+            userRooms:FirebaseUrl+"user-rooms",
+            rooms:FirebaseUrl+"rooms",
+            roomUsers:FirebaseUrl+"room-users",
+            roomMessages:FirebaseUrl+"room-messages",
+            connected:FirebaseUrl+"connected"
+            
         });
+
+
         //auth states
         $stateProvider
 
