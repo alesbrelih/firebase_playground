@@ -23,26 +23,22 @@ function chatServiceModule(app){
 
         function joinPreviousRooms(){
             //joins previous rooms
-            $firebaseArray($firebaseRef.userRooms.child(p_uid)).$loaded()
-                .then(user_rooms=>{
-                    //once resolved
+            $firebaseRef.userRooms.child(p_uid).once("value",user_rooms=>{
+                user_rooms = user_rooms.val();
+                //if no ex user rooms
+                if(user_rooms == null){
+                    //join default
+                    previousRoom();
+                }
+                else{ //else
+                    //join every room
 
-                    //if no ex user rooms
-                    if(user_rooms.length == 0){
-                        //join default
-                        previousRoom();
+                    for(let room in user_rooms){
+
+                        previousRoom(room);
                     }
-                    else{ //else
-                        //join every room
-                        for(let room of user_rooms){
-                            previousRoom(room.$id);
-                        }
-                    }
-
-                }).catch(err=>{
-                    console.log(err);
-                });
-
+                }
+            });
 
         }
 
@@ -57,6 +53,16 @@ function chatServiceModule(app){
 
             //room def exists
             if(exRoomId){
+
+                //join room chat
+                const userRef = $firebaseRef.roomUsers.child(exRoomId).child(p_uid);
+                userRef.set({
+                    name:currentUserDb.name,
+                    lastname:currentUserDb.lastname,
+                    username:currentUserDb.username,
+                    photo:currentUserDb.photo
+                });
+
                 //get room users
 
                 let roomUsers = $firebaseArray($firebaseRef.roomUsers.child(exRoomId))
@@ -89,7 +95,7 @@ function chatServiceModule(app){
 
             $firebaseRef.rooms.orderByChild("name").equalTo(roomName).once("value")
                 .then(snap=>{
-
+                    let roomId = null;
                     if(snap.val() === null)
                     {
                         //creates room
@@ -97,6 +103,11 @@ function chatServiceModule(app){
                         room.set({
                             name:roomName
                         });
+
+                        //save room id
+                        roomId = room.key;
+
+                        //push user/room to ref in db
                         $firebaseRef.userRooms.child(p_uid).child(room.key)
                             .set({name:roomName});
                         $firebaseRef.roomUsers.child(room.key).child(p_uid)
@@ -109,7 +120,7 @@ function chatServiceModule(app){
                     }
                     else{
                         //room already exists
-                        const roomId = snap.key;
+                        roomId = snap.key;
                         $firebaseRef.userRooms.child(p_uid).child(roomId)
                             .set({name:roomName});
                         $firebaseRef.roomUsers.child(roomId).child(p_uid)
@@ -125,13 +136,13 @@ function chatServiceModule(app){
                     //set ref to that room messages / users
                     let newRoomRef = {};
 
-                    let roomUsers = $firebaseArray($firebaseRef.roomUsers.child(exRoomId))
+                    let roomUsers = $firebaseArray($firebaseRef.roomUsers.child(roomId))
                     .$loaded().then(users=>{
                         roomUsers = users;
                     }).catch(err=>console.log(err));
 
                     //get room messages
-                    let roomMessages = $firebaseArray($firebaseRef.roomMessages.child(exRoomId))
+                    let roomMessages = $firebaseArray($firebaseRef.roomMessages.child(roomId))
                         .$loaded().then(messages=>{
                             roomMessages = messages;
                         }).catch(err=>console.log(err));
@@ -168,11 +179,6 @@ function chatServiceModule(app){
 
                     userConnected.onDisconnect().remove();
                 });
-
-
-
-
-
 
             //join his rooms
             joinPreviousRooms();
