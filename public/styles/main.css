@@ -3728,9 +3728,8 @@ chat-main {
               padding: 10px 30px; }
               .chat-container .main .window-container .chat-wrapper .chat-window .chat-input button:active {
                 transform: scale(0.95); }
-          .chat-container .main .window-container .chat-wrapper .chat-window div[ui-view] {
-            flex: 1;
-            background-color: #fbfbfb; }
+          .chat-container .main .window-container .chat-wrapper .chat-window chat-public, .chat-container .main .window-container .chat-wrapper .chat-window chat-private {
+            flex: 1; }
         .chat-container .main .window-container .chat-wrapper .room-users {
           background-color: #3D3D3B;
           border: 1px solid #b8b8b8;

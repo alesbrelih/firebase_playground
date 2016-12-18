@@ -11,8 +11,17 @@ function mainChatComponentModule(app){
             // 3 options: people, rooms, join
             vm.sidebar = null;
 
+            //room types
+            vm.RoomTypes = require("../../../constant/room.types");
+
             //set chat
             ChatService.JoinChat();
+
+            //once joins room dont join privates
+            vm.currentRoomType = vm.RoomTypes.room;
+
+            //set current room ref
+            vm.current = ChatService.Current();
         };
 
         //open sidebar
@@ -27,6 +36,10 @@ function mainChatComponentModule(app){
                 vm.sidebar = sidebar;
             }
 
+        };
+        vm.test = ()=>{
+            console.log("current room",vm.current);
+            console.log("chat service current room",ChatService.Current());
         };
     }
 

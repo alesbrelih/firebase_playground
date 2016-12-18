@@ -30,7 +30,7 @@ function appConfigModule(app, firebase) {
             roomUsers:FirebaseUrl+"room-users",
             roomMessages:FirebaseUrl+"room-messages",
             connected:FirebaseUrl+"connected"
-            
+
         });
 
 

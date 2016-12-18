@@ -236,9 +236,8 @@ chat-main{
                     }
 
                     //main container for components
-                    div[ui-view]{
+                    chat-public,chat-private{
                         flex:1;
-                        background-color:$gray-lightest;
                     }
                 }
 

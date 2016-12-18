@@ -8,6 +8,8 @@ function publicChatComponentModule(app){
 
         //current scope
         const vm = this;
+
+
     }
 
 
@@ -15,7 +17,10 @@ function publicChatComponentModule(app){
     app.component("chatPublic",{
         controller:publicChatComponentController,
         controllerAs:"vm",
-        templateUrl:"/scripts/templates/main/public/public.chat.component.js"
+        templateUrl:"/scripts/templates/chat/public/public.chat.component.html",
+        bindings:{
+            currentRoom:"<"
+        }
     });
 }
 

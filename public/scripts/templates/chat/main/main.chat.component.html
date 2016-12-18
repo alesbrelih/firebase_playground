@@ -16,10 +16,11 @@
             </div>
             <div class="chat-wrapper">
                 <div class="chat-window">
-                    <div ui-view></div>
+                    <chat-public current-room="vm.currentRoom" ng-if="vm.currentRoomType == vm.RoomTypes.room"></chat-public>
+                    <chat-private current-private-room="vm.currentPrivate" ng-if="vm.currentRoomType == vm.RoomTypes.private"></chat-private>
                     <div class="chat-input">
                         <input type="text" placeholder="Type your message ...">
-                        <button type="button" class="button button-primary fa fa-paper-plane"></button>
+                        <button type="button" class="button button-primary fa fa-paper-plane" ng-click="vm.test()"></button>
                     </div>
 
 
@@ -27,7 +28,7 @@
                 <div class="room-users" ng-class="{show:vm.sidebar=='people'}">
                     <i class="fa fa-remove"></i>
                     <ul>
-                        <li>
+                        <!--<li>
                             <div class="user active">
                                 <div class="search">
                                     <i class="fa fa-search"></i>
@@ -36,8 +37,16 @@
                                     Aleš
                                 </div>
                             </div>
+                        </li>-->
+                        <li ng-repeat="user in vm.current.room.users">
+                            <div class="user" ng-class="{active:user.username == vm.current.user.username}">
+                                <div class="search"><i class="fa fa-search"></i></div>
+                                <div class="name">
+                                    {{user.username}}
+                                </div>
+                            </div>
                         </li>
-                        <li>
+                        <!--<li>
                             <div class="user">
                                 <div class="search">
                                     <i class="fa fa-search"></i>
@@ -76,7 +85,7 @@
                                     Urban
                                 </div>
                             </div>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </div>

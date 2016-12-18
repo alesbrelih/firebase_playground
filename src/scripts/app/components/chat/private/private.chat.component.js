@@ -16,7 +16,10 @@ function privateChatComponentModule(app){
     app.component("privateChat",{
         controller:privateChatComponentController,
         controllerAs:"vm",
-        templateUrl:"/scripts/templates/chat/private/private.chat.component.js"
+        templateUrl:"/scripts/templates/chat/private/private.chat.component.html",
+        bindings:{
+            currentPrivateRoom : "<"
+        }
     });
 }
 

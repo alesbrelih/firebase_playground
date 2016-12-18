@@ -3,7 +3,7 @@
 function chatServiceModule(app){
 
     //chat service controller
-    function chatServiceController($firebaseObject,$firebaseArray,$firebaseRef,Auth){
+    function chatServiceController($firebaseObject,$firebaseArray,$firebaseRef,Auth,$q){
         //returned factory
         const chatFactory = {};
 
@@ -12,8 +12,11 @@ function chatServiceModule(app){
 
         // --- privates --- //
         const rooms = [];
-        let currentRoom = null;
-        let currentPrivate = null;
+        let current = {
+            user:null,
+            room:null,
+            private:null
+        };
         let p_uid = null;
         let currentUserDb = null;
 
@@ -25,19 +28,37 @@ function chatServiceModule(app){
             //joins previous rooms
             $firebaseRef.userRooms.child(p_uid).once("value",user_rooms=>{
                 user_rooms = user_rooms.val();
+
+                //join rooms promises
+                const joinRoomsPromises = [];
+
                 //if no ex user rooms
                 if(user_rooms == null){
                     //join default
-                    previousRoom();
+                    joinRoomsPromises.push(previousRoom());
                 }
                 else{ //else
                     //join every room
 
                     for(let room in user_rooms){
 
-                        previousRoom(room);
+                        joinRoomsPromises.push(previousRoom(room));
                     }
                 }
+
+
+                //current room is first that is public :
+                //TODO: think a bit more about how to approach this
+                $q.all(joinRoomsPromises).then(success=>{
+                    let publicRooms = rooms.filter(item=>{
+                        return item.type == roomTypes.room;
+
+                    });
+                    current.room = publicRooms[0];
+                }).catch(err=>console.log(err));
+
+
+
             });
 
         }
@@ -46,13 +67,12 @@ function chatServiceModule(app){
         function previousRoom(exRoomId){
             // TODO: JOIN ROOM ON DB
 
-            const room = {
-                type:roomTypes.room
-            };
 
 
             //room def exists
             if(exRoomId){
+
+                const deffered = $q.defer();
 
                 //join room chat
                 const userRef = $firebaseRef.roomUsers.child(exRoomId).child(p_uid);
@@ -63,35 +83,42 @@ function chatServiceModule(app){
                     photo:currentUserDb.photo
                 });
 
-                //get room users
-
-                let roomUsers = $firebaseArray($firebaseRef.roomUsers.child(exRoomId))
-                    .$loaded().then(users=>{
-                        roomUsers = users;
-                    }).catch(err=>console.log(err));
-
-                //get room messages
+                //promises for message and users
+                let roomUsersPromise = $firebaseArray($firebaseRef.roomUsers.child(exRoomId))
+                    .$loaded();
                 let roomMessages = $firebaseArray($firebaseRef.roomMessages.child(exRoomId))
-                    .$loaded().then(messages=>{
-                        roomMessages = messages;
-                    }).catch(err=>console.log(err));
+                    .$loaded();
 
-                //set arrays to object
-                room.users = roomUsers;
-                room.messages = roomMessages;
+                //set new room if both resolve successfully
+                $q.all([roomUsersPromise,roomMessages]).then(success=>{
+                    const room = {
+                        type:roomTypes.room,
+                        users:success[0],
+                        messages:success[1]
+                    };
+                    rooms.push(room);
+                    deffered.resolve();
 
-                //add to list
-                rooms.push(room);
+                }).catch(err=>{
+                    console.log(err);
+                    deffered.reject();
+                });
+
+                return deffered.promise;
 
             }
             else{
-                //doesnt exist, join default
-                joinRoom("default");
+                //doesnt exist, join default and return promise for when its done
+                return joinRoom("default");
             }
         }
 
         // ---- join new room functions ----- //
         function joinRoom(roomName){
+
+            //deffered
+            const deffered = $q.defer();
+
 
             $firebaseRef.rooms.orderByChild("name").equalTo(roomName).once("value")
                 .then(snap=>{
@@ -117,6 +144,8 @@ function chatServiceModule(app){
                                 username:currentUserDb.username,
                                 photo:currentUserDb.photo
                             });
+
+
                     }
                     else{
                         //room already exists
@@ -154,8 +183,16 @@ function chatServiceModule(app){
                     //add to list
                     rooms.push(newRoomRef);
 
+                    deffered.resolve();
 
-                }).catch(err=>console.log(err));
+
+                }).catch(err=>{
+                    deffered.reject();
+                    console.log(err);
+                });
+
+            //return promise
+            return deffered.promise;
 
         }
 
@@ -169,6 +206,7 @@ function chatServiceModule(app){
             $firebaseRef.profiles.child(p_uid).once("value")
                 .then(function(snap){
                     currentUserDb = snap.val();
+                    current.user = snap.val();
 
                     let userConnected = $firebaseRef.connected.push();
                     //set data
@@ -191,12 +229,19 @@ function chatServiceModule(app){
 
         };
 
+        //returns current object for both private and public
+        chatFactory.Current = ()=>{
+            return current;
+        };
+
+
+
         //return factory
         return chatFactory;
     }
 
     //inject needed services
-    chatServiceController.$inject = ["$firebaseObject","$firebaseArray","$firebaseRef","Auth"];
+    chatServiceController.$inject = ["$firebaseObject","$firebaseArray","$firebaseRef","Auth","$q"];
 
     //register factory
     app.factory("ChatService",chatServiceController);
