@@ -43,6 +43,7 @@ function mainChatComponentModule(app){
         vm.test = ()=>{
             console.log("current room",vm.current);
             console.log("chat service current room",ChatService.Current());
+            console.log(vm.rooms);
         };
     }
 

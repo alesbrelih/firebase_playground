@@ -97,11 +97,12 @@ function chatServiceModule(app){
 
                 //set new room if both resolve successfully
                 $q.all([roomUsersPromise,roomMessages,roomDetails]).then(success=>{
+                    console.log("success 2",success[2]);
                     const room = {
                         type:roomTypes.room,
                         users:success[0],
                         messages:success[1],
-                        name:success[2].name
+                        name:success[2].val().name
                     };
                     rooms.push(room);
                     deffered.resolve();
@@ -192,11 +193,11 @@ function chatServiceModule(app){
                     $q.all([roomDetailsPromise,roomUsersPromise,roomMessagesPromise]).all(success=>{
                         const room = {
                             type : roomTypes.room,
-                            name: success[0].name,
+                            name: success[0].val().name,
                             users: success[1],
                             messages:success[2]
                         };
-                        
+
                         //add to list
                         rooms.push(room);
 
