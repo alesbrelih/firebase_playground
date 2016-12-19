@@ -234,6 +234,7 @@ function chatServiceModule(app){
                 .then(function(snap){
                     currentUserDb = snap.val();
                     current.user = snap.val();
+                    current.user.uid = p_uid;
 
                     let userConnected = $firebaseRef.connected.push();
                     //set data
@@ -264,6 +265,24 @@ function chatServiceModule(app){
         //return all rooms
         chatFactory.Rooms = ()=>{
             return rooms;
+        };
+
+        //send message to current room
+        chatFactory.SendMessage = (_chatMessage, _roomType)=>{
+            if(_roomType === roomTypes.room){
+                
+                const message = {};
+
+                //add message to ref
+                current.room.messages.$add({
+                    profile:current.user,
+                    message:_chatMessage
+                });
+
+            }
+            else if(_roomType === roomTypes.private){
+                //TODO FOR PRIVATES
+            }
         };
 
 

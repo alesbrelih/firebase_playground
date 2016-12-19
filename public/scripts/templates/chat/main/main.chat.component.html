@@ -2,11 +2,9 @@
     <div class="main">
         <div class="tabs" ng-class="{show:vm.sidebar == 'rooms'}">
             <i class="fa fa-remove" ng-click="vm.openSide('rooms')"></i>
-            <!--<div class="chat-tab">Default</div>
-            <div class="chat-tab">Aleš</div>
-            <div class="chat-tab messages">Marjan</div>
+            <!--<div class="chat-tab messages">Marjan</div>
             <div class="chat-tab active">Branko</div>-->
-            <div ng-repeat="tab in vm.rooms" class="chat-tab">
+            <div ng-repeat="tab in vm.rooms" class="chat-tab" ng-class="{'active':tab.name == vm.current.room.name}">
                 {{tab.name}}
             </div>
         </div>
@@ -19,11 +17,11 @@
             </div>
             <div class="chat-wrapper">
                 <div class="chat-window">
-                    <chat-public current-room="vm.current" ng-if="vm.currentRoomType == vm.RoomTypes.room"></chat-public>
-                    <chat-private current-private-room="vm.current" ng-if="vm.currentRoomType == vm.RoomTypes.private"></chat-private>
+                    <chat-public current-room="vm.current.room" ng-if="vm.currentRoomType == vm.RoomTypes.room"></chat-public>
+                    <chat-private current-private-room="vm.current.private" ng-if="vm.currentRoomType == vm.RoomTypes.private"></chat-private>
                     <div class="chat-input">
-                        <input type="text" placeholder="Type your message ...">
-                        <button type="button" class="button button-primary fa fa-paper-plane" ng-click="vm.test()"></button>
+                        <input type="text" placeholder="Type your message ..." ng-model="vm.input">
+                        <button type="button" class="button button-primary fa fa-paper-plane" ng-click="vm.sendMessage()"></button>
                     </div>
 
 

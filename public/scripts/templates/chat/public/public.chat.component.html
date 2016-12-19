@@ -1,6 +1,6 @@
 <div class="room-messages">
     <ul>
-        <li>
+        <li ng-repeat="message in vm.currentRoom.messages" >
             <div class="message-container">
                 <div class="username">
                     ljiech
@@ -10,7 +10,7 @@
                 </div>
             </div>
         </li>
-        <li>
+        <!--<li>
             <div class="message-container">
                 <div class="username">
                     ljiech
@@ -19,6 +19,6 @@
                     Aliquam placerat faucibus massa.
                 </div>
             </div>
-        </li>
+        </li>-->
     </ul>
 </div>

@@ -25,6 +25,9 @@ function mainChatComponentModule(app){
 
             //set current room ref
             vm.current = ChatService.Current();
+
+            //set text input
+            vm.input = "";
         };
 
         //open sidebar
@@ -40,6 +43,13 @@ function mainChatComponentModule(app){
             }
 
         };
+
+        //sends message using Chatservice send message
+        vm.sendMessage = ()=>{
+            //sends message to current room
+            ChatService.SendMessage(vm.input,vm.currentRoomType);
+        };
+        
         vm.test = ()=>{
             console.log("current room",vm.current);
             console.log("chat service current room",ChatService.Current());
