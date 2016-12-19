@@ -2,10 +2,13 @@
     <div class="main">
         <div class="tabs" ng-class="{show:vm.sidebar == 'rooms'}">
             <i class="fa fa-remove" ng-click="vm.openSide('rooms')"></i>
-            <div class="chat-tab">Default</div>
+            <!--<div class="chat-tab">Default</div>
             <div class="chat-tab">Aleš</div>
             <div class="chat-tab messages">Marjan</div>
-            <div class="chat-tab active">Branko</div>
+            <div class="chat-tab active">Branko</div>-->
+            <div ng-repeat="tab in vm.rooms" class="chat-tab">
+                {{tab.name}}
+            </div>
         </div>
 
 

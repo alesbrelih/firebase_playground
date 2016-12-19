@@ -49,7 +49,7 @@ function chatServiceModule(app){
 
                 //current room is first that is public :
                 //TODO: think a bit more about how to approach this
-                $q.all(joinRoomsPromises).then(success=>{
+                $q.all(joinRoomsPromises).then(()=>{
                     let publicRooms = rooms.filter(item=>{
                         return item.type == roomTypes.room;
 
@@ -86,15 +86,22 @@ function chatServiceModule(app){
                 //promises for message and users
                 let roomUsersPromise = $firebaseArray($firebaseRef.roomUsers.child(exRoomId))
                     .$loaded();
+
+                //room name
                 let roomMessages = $firebaseArray($firebaseRef.roomMessages.child(exRoomId))
                     .$loaded();
 
+                //room name
+                let roomDetails = $firebaseRef.rooms.child(exRoomId).once("value");
+
+
                 //set new room if both resolve successfully
-                $q.all([roomUsersPromise,roomMessages]).then(success=>{
+                $q.all([roomUsersPromise,roomMessages,roomDetails]).then(success=>{
                     const room = {
                         type:roomTypes.room,
                         users:success[0],
-                        messages:success[1]
+                        messages:success[1],
+                        name:success[2].name
                     };
                     rooms.push(room);
                     deffered.resolve();
@@ -165,25 +172,43 @@ function chatServiceModule(app){
                     //set ref to that room messages / users
                     let newRoomRef = {};
 
-                    let roomUsers = $firebaseArray($firebaseRef.roomUsers.child(roomId))
-                    .$loaded().then(users=>{
-                        roomUsers = users;
-                    }).catch(err=>console.log(err));
+                    //room details
+                    let roomDetailsPromise = $firebaseRef.rooms.child(roomId).once("value");
+
+                    //room users
+                    let roomUsersPromise = $firebaseArray($firebaseRef.roomUsers.child(roomId))
+                    .$loaded();
+                    // .then(users=>{
+                    //     roomUsers = users;
+                    // }).catch(err=>console.log(err));
 
                     //get room messages
-                    let roomMessages = $firebaseArray($firebaseRef.roomMessages.child(roomId))
-                        .$loaded().then(messages=>{
-                            roomMessages = messages;
-                        }).catch(err=>console.log(err));
+                    let roomMessagesPromise = $firebaseArray($firebaseRef.roomMessages.child(roomId))
+                        .$loaded();
+                        // .then(messages=>{
+                        //     roomMessages = messages;
+                        // }).catch(err=>console.log(err));
 
-                    //set arrays to object
-                    newRoomRef.users = roomUsers;
-                    newRoomRef.messages = roomMessages;
+                    $q.all([roomDetailsPromise,roomUsersPromise,roomMessagesPromise]).all(success=>{
+                        const room = {
+                            type : roomTypes.room,
+                            name: success[0].name,
+                            users: success[1],
+                            messages:success[2]
+                        };
+                        
+                        //add to list
+                        rooms.push(room);
 
-                    //add to list
-                    rooms.push(newRoomRef);
+                        //successfull resolve
+                        deffered.resolve();
+                    }).catch(err=>{
+                        console.log(err);
+                        deffered.reject();
+                    });
 
-                    deffered.resolve();
+
+
 
 
                 }).catch(err=>{
@@ -200,6 +225,7 @@ function chatServiceModule(app){
 
         //gets user rooms
         chatFactory.JoinChat = ()=>{
+
             //get user uid
             p_uid = Auth.$getAuth().uid;
 
@@ -232,6 +258,11 @@ function chatServiceModule(app){
         //returns current object for both private and public
         chatFactory.Current = ()=>{
             return current;
+        };
+
+        //return all rooms
+        chatFactory.Rooms = ()=>{
+            return rooms;
         };
 
 

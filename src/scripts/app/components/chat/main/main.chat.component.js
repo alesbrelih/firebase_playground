@@ -20,6 +20,9 @@ function mainChatComponentModule(app){
             //once joins room dont join privates
             vm.currentRoomType = vm.RoomTypes.room;
 
+            //get all chat rooms
+            vm.rooms = ChatService.Rooms();
+
             //set current room ref
             vm.current = ChatService.Current();
         };
