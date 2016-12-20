@@ -3,10 +3,10 @@
         <li ng-repeat="message in vm.currentRoom.messages" >
             <div class="message-container">
                 <div class="username">
-                    ljiech
+                    {{message.profile.username}}
                 </div>
                 <div class="message">
-                    Aliquam placerat faucibus massa, vel dignissim enim blandit id. Vestibulum vel rhoncus sem. Nullam luctus dictum lacus in sodales. Nunc finibus felis sed purus tempus, et pellentesque nunc sollicitudin. Quisque hendrerit, sapien ut convallis ultricies, odio neque rutrum sapien, ornare ultrices diam neque in mauris. Praesent id hendrerit risus. Duis orci sem, efficitur sed dictum ut, sagittis et diam. Integer volutpat rhoncus orci, at fringilla quam ultrices
+                    {{message.message}}
                 </div>
             </div>
         </li>

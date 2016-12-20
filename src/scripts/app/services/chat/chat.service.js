@@ -269,20 +269,29 @@ function chatServiceModule(app){
 
         //send message to current room
         chatFactory.SendMessage = (_chatMessage, _roomType)=>{
+            const deffered = $q.defer();
+
             if(_roomType === roomTypes.room){
-                
-                const message = {};
+
 
                 //add message to ref
                 current.room.messages.$add({
                     profile:current.user,
                     message:_chatMessage
+                }).then(()=>{
+                    deffered.resolve();
+                }).catch(err=>{
+                    console.log(err);
+                    deffered.reject();
                 });
+
 
             }
             else if(_roomType === roomTypes.private){
                 //TODO FOR PRIVATES
             }
+
+            return deffered.promise;
         };
 
 

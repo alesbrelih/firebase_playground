@@ -47,14 +47,14 @@ function mainChatComponentModule(app){
         //sends message using Chatservice send message
         vm.sendMessage = ()=>{
             //sends message to current room
-            ChatService.SendMessage(vm.input,vm.currentRoomType);
+            ChatService.SendMessage(vm.input,vm.currentRoomType)
+                .then(()=>{
+                    //success
+                    //clear input
+                    vm.input = "";
+                });
         };
-        
-        vm.test = ()=>{
-            console.log("current room",vm.current);
-            console.log("chat service current room",ChatService.Current());
-            console.log(vm.rooms);
-        };
+
     }
 
     //inject services
