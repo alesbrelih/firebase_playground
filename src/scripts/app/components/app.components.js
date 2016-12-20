@@ -55,7 +55,13 @@ function registerAllComponentsModule(app){
     const chatPublicComponent = require("./chat/public/public.chat.component");
     chatPublicComponent(app);
 
+    /////////////////////////////////
+    // ---- User components ------ //
+    /////////////////////////////////
 
+    //main
+    const userComponent = require("./user/user.component");
+    userComponent(app);
 
     //////////////////////////////////
     // ------ Helper components ----//

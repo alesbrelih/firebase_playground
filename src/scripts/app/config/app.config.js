@@ -68,7 +68,7 @@ function appConfigModule(app, firebase) {
                 url:"/profile",
                 template:"<profile></profile>",
                 resolve:{
-                    Profile:["ProfileService","Auth",function(ProfileService,Auth){
+                    Profile:["Auth",function(Auth){
                         return Auth.$requireSignIn();
 
 
@@ -79,11 +79,27 @@ function appConfigModule(app, firebase) {
             .state("main.chat",{
                 url:"/chat",
                 template:"<chat-main></chat-main>"
+            })
+
+            // ---- see others user profile page ---- //
+            .state("main.user",{
+                url:"/user/:id",
+                template:"<user></user>",
+                resolve:{
+                    Profile:["Auth",function(Auth){
+                        return Auth.$requireSignIn();
+                    }],
+                    User:["UserService","$stateParams",function(UserService,$stateParams){
+                        console.log($stateParams.id);
+                        return UserService.GetProfile($stateParams.id);
+                    }]
+                }
+
             });
 
 
         //if none of the states match
-        $urlRouterProvider.otherwise("/auth/login");
+        $urlRouterProvider.otherwise("/profile");
     }
 
 
@@ -104,13 +120,10 @@ function appConfigModule(app, firebase) {
             if(toState.name == "main.chat"){ //if going to chat check if user set its username on profile
 
                 const user = Auth.$getAuth();
-                if(!user){
-                    event.preventDefault();
-                    //no auth go to login
-                    $state.go("auth.login");
-                }
 
-                $firebaseRef.profiles.child(user.uid).once("value")
+                //if user logged
+                if(user){
+                    $firebaseRef.profiles.child(user.uid).once("value")
                     .then(snap=>{
                         if(snap.child("username").exists()){ //username exists
                             $state.go("main.chat"); //go to chat
@@ -121,6 +134,8 @@ function appConfigModule(app, firebase) {
                             toastr.error("Set your username first.","Error");
                         }
                     });
+                }
+
             }
         });
         //catch auth error
@@ -129,7 +144,6 @@ function appConfigModule(app, firebase) {
             // We can catch the error thrown when the $requireSignIn promise is rejected
             // and redirect the user back to the home page
             event.preventDefault();
-            console.log("errrrrr");
             if(error){
                 console.log("error",error);
             }

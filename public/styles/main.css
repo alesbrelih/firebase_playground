@@ -3920,4 +3920,57 @@ chat-main {
   .chat-container .actions-collapsed {
     display: block; } }
 
+.user-wrapper {
+  width: 100%;
+  min-height: 400px;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column; }
+  .user-wrapper .profile-username {
+    text-align: center;
+    font-size: 1.2em;
+    color: white;
+    padding: 20px;
+    background-color: #E0BE04;
+    align-self: stretch;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px; }
+  .user-wrapper .profile-details {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #E0BE04;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px; }
+    .user-wrapper .profile-details .profile-picture {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      flex: 1; }
+      .user-wrapper .profile-details .profile-picture img {
+        max-width: 80%;
+        border-radius: 4px; }
+    .user-wrapper .profile-details .profile-info {
+      flex: 1;
+      padding: 20px; }
+      .user-wrapper .profile-details .profile-info dl {
+        text-align: center; }
+        .user-wrapper .profile-details .profile-info dl dt {
+          color: #E0BE04;
+          font-size: 1.1em; }
+        .user-wrapper .profile-details .profile-info dl dd {
+          margin-bottom: 10px; }
+
+@media (max-width: 550px) {
+  .user-wrapper {
+    font-size: 13px; }
+    .user-wrapper .profile-username {
+      padding: 10px; }
+    .user-wrapper .profile-details {
+      flex-direction: column; } }
+
 /*# sourceMappingURL=main.css.map */

@@ -34,7 +34,7 @@
                     <ul>
                         <li ng-repeat="user in vm.current.room.users">
                             <div class="user" ng-class="{active:user.username == vm.current.user.username}">
-                                <div class="search"><i class="fa fa-search"></i></div>
+                                <div class="search"><i class="fa fa-search" ui-sref="main.user({id:user.$id})"></i></div>
                                 <div class="name">
                                     {{user.username}}
                                 </div>

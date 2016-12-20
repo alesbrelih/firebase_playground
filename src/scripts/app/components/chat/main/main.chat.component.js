@@ -46,6 +46,9 @@ function mainChatComponentModule(app){
 
         //sends message using Chatservice send message
         vm.sendMessage = ()=>{
+            if(vm.input == ""){
+                console.log(vm.current.room.users);
+            }
             //sends message to current room
             ChatService.SendMessage(vm.input,vm.currentRoomType)
                 .then(()=>{

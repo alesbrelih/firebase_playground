@@ -21,6 +21,10 @@ function registerAllServicesModule(app){
     //chat service
     const chatService = require("./chat/chat.service");
     chatService(app);
+
+    //user service
+    const userService = require("./user/user.service");
+    userService(app);
 }
 
 module.exports = registerAllServicesModule;
