@@ -140,6 +140,7 @@ function profileServicesModule(app){
             //registers using firebase register with email and pwd
             return Auth.$createUserWithEmailAndPassword(email, pwd)
                 .then(firebaseUser => {
+                    console.log(firebaseUser);
                     profileFactory.GetProfile(firebaseUser.uid);
                     toastr.success("Account created.","success");
                     $state.go(MainState);
