@@ -25,6 +25,14 @@ function chatServiceModule(app){
         // ----- previous rooms functions ----- //
 
         function joinPreviousRooms(){
+
+            //clear rooms
+            if(rooms.length != 0){
+                while(rooms.length != 0){
+                    rooms.pop();
+                }
+            }
+
             //joins previous rooms
             $firebaseRef.userRooms.child(p_uid).once("value",user_rooms=>{
                 user_rooms = user_rooms.val();

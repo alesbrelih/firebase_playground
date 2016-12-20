@@ -94,32 +94,37 @@ function appConfigModule(app, firebase) {
     //app configuration
     app.config(appConfigFunction);
 
-    //catch auth error
-    // for ui-router
+
     app.run(["$rootScope", "$state","$firebaseRef","Auth","toastr", function ($rootScope, $state,$firebaseRef,Auth,toastr) {
+
+        //catch state change
         $rootScope.$on("$stateChangeStart",function(event, toState, toParams, fromState, fromParams, options){
 
 
-            if(toState.name == "main.chat"){
-                event.preventDefault();
+            if(toState.name == "main.chat"){ //if going to chat check if user set its username on profile
+
                 const user = Auth.$getAuth();
                 if(!user){
+                    event.preventDefault();
                     //no auth go to login
                     $state.go("auth.login");
                 }
 
                 $firebaseRef.profiles.child(user.uid).once("value")
                     .then(snap=>{
-                        if(snap.child("username").exists()){
-                            $state.go("main.chat");
+                        if(snap.child("username").exists()){ //username exists
+                            $state.go("main.chat"); //go to chat
                         }
                         else{
-                            $state.go("main.profile");
+                            event.preventDefault();
+                            $state.go("main.profile"); //username wasnt set, go to profile
                             toastr.error("Set your username first.","Error");
                         }
                     });
             }
         });
+        //catch auth error
+        // for ui-router
         $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {
             // We can catch the error thrown when the $requireSignIn promise is rejected
             // and redirect the user back to the home page
