@@ -3657,9 +3657,25 @@ chat-main {
       .chat-container .main .tabs .chat-tab {
         padding: 10px 20px;
         color: white;
-        cursor: pointer; }
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        .chat-container .main .tabs .chat-tab i.fa {
+          margin-left: 20px;
+          margin-top: -5px;
+          margin-right: -15px;
+          align-self: flex-start;
+          font-weight: normal;
+          font-size: 0.7em;
+          display: none;
+          transition: all 150ms ease-in-out; }
+          .chat-container .main .tabs .chat-tab i.fa:hover {
+            transform: scale(1.1); }
         .chat-container .main .tabs .chat-tab.messages {
           color: #E0BE04; }
+        .chat-container .main .tabs .chat-tab.active i.fa {
+          display: block; }
         .chat-container .main .tabs .chat-tab.messages:hover, .chat-container .main .tabs .chat-tab:hover, .chat-container .main .tabs .chat-tab.active {
           background-color: #E0BE04;
           color: #3D3D3B; }
@@ -3870,6 +3886,11 @@ chat-main {
       padding: 0px 10px;
       margin-top: 5px;
       font-size: 0.9em; }
+      .chat-container .main .tabs .chat-tab i.fa {
+        margin: 0px;
+        margin-left: 10px;
+        font-size: 0.9em;
+        align-self: center; }
     .chat-container .main .tabs i.fa-remove {
       display: block !important; }
   .chat-container .main .window-container .join-room {

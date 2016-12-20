@@ -55,6 +55,29 @@ function mainChatComponentModule(app){
                 });
         };
 
+        //join room
+        vm.joinRoom = ()=>{
+            if(vm.roomName != null && vm.roomName != ""){
+                //join room
+                ChatService.JoinRoom(vm.roomName,true).then(()=>{
+                    vm.roomName = "";
+                });
+            }
+        };
+
+        //select room
+        vm.selectRoom = (room)=>{
+            ChatService.SelectRoom(room);
+            if(room.type == vm.RoomTypes.room){
+                vm.currentRoomType = vm.RoomTypes.room;
+            }
+        };
+
+        //leave room method
+        vm.leaveRoom = (room) => {
+            ChatService.LeaveRoom(room);
+        };
+
     }
 
     //inject services

@@ -4,8 +4,11 @@
             <i class="fa fa-remove" ng-click="vm.openSide('rooms')"></i>
             <!--<div class="chat-tab messages">Marjan</div>
             <div class="chat-tab active">Branko</div>-->
-            <div ng-repeat="tab in vm.rooms" class="chat-tab" ng-class="{'active':tab.name == vm.current.room.name}">
-                {{tab.name}}
+            <div ng-repeat="tab in vm.rooms" class="chat-tab" ng-class="{'active':tab.name == vm.current.room.name}" ng-click="vm.selectRoom(tab)">
+
+                    {{tab.name}}
+                    <i class="fa fa-times" ng-click="vm.leaveRoom(tab)"></i>
+
             </div>
         </div>
 
@@ -13,7 +16,7 @@
         <div class="window-container">
             <div class="join-room" ng-class="{show:vm.sidebar=='join'}">
                 <i class="fa fa-remove"></i>
-                <input type="text" name="" placeholder="Room"> <i class="fa fa-plus"></i>
+                <input type="text" name="" placeholder="Room" ng-model="vm.roomName"> <i class="fa fa-plus" ng-click="vm.joinRoom()"></i>
             </div>
             <div class="chat-wrapper">
                 <div class="chat-window">

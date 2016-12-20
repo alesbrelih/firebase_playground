@@ -97,18 +97,19 @@ function chatServiceModule(app){
 
                 //set new room if both resolve successfully
                 $q.all([roomUsersPromise,roomMessages,roomDetails]).then(success=>{
-                    console.log("success 2",success[2]);
+
                     const room = {
                         type:roomTypes.room,
                         users:success[0],
                         messages:success[1],
-                        name:success[2].val().name
+                        name:success[2].val().name,
+                        id:success[2].key
                     };
                     rooms.push(room);
                     deffered.resolve();
 
                 }).catch(err=>{
-                    console.log(err);
+
                     deffered.reject();
                 });
 
@@ -122,100 +123,134 @@ function chatServiceModule(app){
         }
 
         // ---- join new room functions ----- //
-        function joinRoom(roomName){
+        // openAfterwards represents if user wants to open it once joined
+        function joinRoom(roomName,openAfterwards){
 
             //deffered
             const deffered = $q.defer();
 
 
-            $firebaseRef.rooms.orderByChild("name").equalTo(roomName).once("value")
-                .then(snap=>{
-                    let roomId = null;
-                    if(snap.val() === null)
-                    {
-                        //creates room
-                        const room = $firebaseRef.rooms.push();
-                        room.set({
-                            name:roomName
-                        });
+            //check if room you want to join already he joined to
+            const sameRoom = rooms.filter(item=>{
+                //conditional statement
+                if(item.name.toLowerCase() == roomName.toLowerCase()){
+                    return item;
+                }
+            });
 
-                        //save room id
-                        roomId = room.key;
+            //same name already exists
+            if(sameRoom.length == 1){
+                //DO SOMETHING BUT STOP FUNCTION TO BE EXeCUTED
+                current.room = sameRoom[0];
+                deffered.resolve();
+            }
 
-                        //push user/room to ref in db
-                        $firebaseRef.userRooms.child(p_uid).child(room.key)
-                            .set({name:roomName});
-                        $firebaseRef.roomUsers.child(room.key).child(p_uid)
-                            .set({
-                                name:currentUserDb.name,
-                                lastname:currentUserDb.lastname,
-                                username:currentUserDb.username,
-                                photo:currentUserDb.photo
+
+            //room with same name isnt opened yet
+            if(sameRoom.length == 0){
+                //check if this room already exists
+                // $firebaseRef.rooms.orderByChild("name").equalTo(roomName).once("value")
+                $firebaseRef.rooms.orderByChild("name").startAt(roomName).endAt(roomName).once("value")
+                    .then(snap=>{
+                        let roomId = null;
+
+
+                        if(snap.val() === null)
+                        {
+                            //creates room
+                            const room = $firebaseRef.rooms.push();
+                            room.set({
+                                name:roomName
                             });
 
+                            //save room id
+                            roomId = room.key;
 
-                    }
-                    else{
-                        //room already exists
-                        roomId = snap.key;
-                        $firebaseRef.userRooms.child(p_uid).child(roomId)
-                            .set({name:roomName});
-                        $firebaseRef.roomUsers.child(roomId).child(p_uid)
-                            .set({
-                                name:currentUserDb.name,
-                                lastname:currentUserDb.lastname,
-                                username:currentUserDb.username,
-                                photo:currentUserDb.photo
-                            });
+                            //push user/room to ref in db
+                            $firebaseRef.userRooms.child(p_uid).child(room.key)
+                                .set({name:roomName});
+                            $firebaseRef.roomUsers.child(room.key).child(p_uid)
+                                .set({
+                                    name:currentUserDb.name,
+                                    lastname:currentUserDb.lastname,
+                                    username:currentUserDb.username,
+                                    photo:currentUserDb.photo
+                                });
 
-                    }
 
-                    //set ref to that room messages / users
-                    let newRoomRef = {};
+                        }
+                        else{
+                            //get id from array of rooms, only 1!
+                            for(let id in snap.val()){
+                                roomId = id;
+                            }
 
-                    //room details
-                    let roomDetailsPromise = $firebaseRef.rooms.child(roomId).once("value");
+                            $firebaseRef.userRooms.child(p_uid).child(roomId)
+                                .set({name:roomName});
+                            $firebaseRef.roomUsers.child(roomId).child(p_uid)
+                                .set({
+                                    name:currentUserDb.name,
+                                    lastname:currentUserDb.lastname,
+                                    username:currentUserDb.username,
+                                    photo:currentUserDb.photo
+                                });
 
-                    //room users
-                    let roomUsersPromise = $firebaseArray($firebaseRef.roomUsers.child(roomId))
-                    .$loaded();
-                    // .then(users=>{
-                    //     roomUsers = users;
-                    // }).catch(err=>console.log(err));
+                        }
 
-                    //get room messages
-                    let roomMessagesPromise = $firebaseArray($firebaseRef.roomMessages.child(roomId))
+                        //room details
+                        let roomDetailsPromise = $firebaseRef.rooms.child(roomId).once("value");
+
+                        //room users
+                        let roomUsersPromise = $firebaseArray($firebaseRef.roomUsers.child(roomId))
                         .$loaded();
-                        // .then(messages=>{
-                        //     roomMessages = messages;
+                        // .then(users=>{
+                        //     roomUsers = users;
                         // }).catch(err=>console.log(err));
 
-                    $q.all([roomDetailsPromise,roomUsersPromise,roomMessagesPromise]).all(success=>{
-                        const room = {
-                            type : roomTypes.room,
-                            name: success[0].val().name,
-                            users: success[1],
-                            messages:success[2]
-                        };
+                        //get room messages
+                        let roomMessagesPromise = $firebaseArray($firebaseRef.roomMessages.child(roomId))
+                            .$loaded();
+                            // .then(messages=>{
+                            //     roomMessages = messages;
+                            // }).catch(err=>console.log(err));
 
-                        //add to list
-                        rooms.push(room);
+                        $q.all([roomDetailsPromise,roomUsersPromise,roomMessagesPromise]).then(success=>{
+                            const room = {
+                                type : roomTypes.room,
+                                name: success[0].val().name,
+                                users: success[1],
+                                messages:success[2],
+                                id: success[0].key
+                            };
 
-                        //successfull resolve
-                        deffered.resolve();
+                            //add to list
+                            rooms.push(room);
+
+                            //if openAfterwards
+                            if(openAfterwards == true){
+                                //set it as current
+                                current.room = room;
+                            }
+
+                            //successfull resolve
+                            deffered.resolve();
+                        }).catch(err=>{
+                            console.log(err);
+                            deffered.reject();
+                        });
+
+
+
+
+
                     }).catch(err=>{
-                        console.log(err);
                         deffered.reject();
+                        console.log(err);
                     });
 
+            }
 
 
-
-
-                }).catch(err=>{
-                    deffered.reject();
-                    console.log(err);
-                });
 
             //return promise
             return deffered.promise;
@@ -292,6 +327,63 @@ function chatServiceModule(app){
             }
 
             return deffered.promise;
+        };
+
+        //joins room public method that connects to private
+        chatFactory.JoinRoom = (_roomName, _joinAfterwards) => {
+            //join room and return promise
+            return joinRoom(_roomName,_joinAfterwards);
+        };
+
+        //select room
+        chatFactory.SelectRoom = (room) => {
+            // select room
+            if(room.type == roomTypes.room){
+                //select new room
+                current.room = room;
+            }
+            else if(room.type == roomTypes.private){
+                //do stuff when private
+            }
+        };
+
+        //leave room
+        chatFactory.LeaveRoom = (room) => {
+
+            //remove user entry from room users
+            const removeFromRoomUsersPromise = $firebaseRef.roomUsers.child(room.id).child(p_uid).remove();
+            //remove room from user rooms
+            const removeFromUserRoomsPromise = $firebaseRef.userRooms.child(p_uid).child(room.id).remove();
+
+            //once both resolved succesffuly, remove room from array and select new room
+            $q.all([removeFromRoomUsersPromise,removeFromUserRoomsPromise]).then(()=>{
+
+                //get index
+                const indexInArray = rooms.indexOf(room);
+
+                //remove from rooms
+                rooms.splice(indexInArray,1);
+
+                //if was first item
+                if(indexInArray == 0){
+                    // no rooms left
+                    if(rooms.length == 0){
+                        current.room = null;
+                    }
+                    else{
+                        //select next room instead of previous
+                        current.room = rooms[0];
+                    }
+                }
+                else{
+                    //other edge case
+                    if(indexInArray == rooms.length){
+                        current.room = rooms[indexInArray-1];
+                    }
+                }
+
+            }).catch(err=>console.log(err));
+
         };
 
 
