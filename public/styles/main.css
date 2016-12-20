@@ -3709,6 +3709,9 @@ chat-main {
           display: flex;
           flex-direction: column;
           align-items: stretch; }
+          .chat-container .main .window-container .chat-wrapper .chat-window chat-public, .chat-container .main .window-container .chat-wrapper .chat-window chat-private {
+            max-height: 400px;
+            overflow-y: auto; }
           .chat-container .main .window-container .chat-wrapper .chat-window .chat-input {
             display: flex;
             justify-content: center;
