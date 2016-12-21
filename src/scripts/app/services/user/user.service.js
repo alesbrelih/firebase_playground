@@ -6,10 +6,8 @@ function userServiceModule(app){
         const userFactory = {};
 
         userFactory.GetProfile = (id) => {
-            $firebaseRef.profiles.child(id)
-                .once("value").then(snap=>{
-                    return snap.val();
-                }).catch(err=>console.log(err));
+            return $firebaseRef.profiles.child(id)
+                .once("value");
         };
 
         return userFactory;

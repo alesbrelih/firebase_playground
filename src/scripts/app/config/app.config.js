@@ -84,7 +84,7 @@ function appConfigModule(app, firebase) {
             // ---- see others user profile page ---- //
             .state("main.user",{
                 url:"/user/:id",
-                template:"<user></user>",
+                template:"<user user='$resolve.User'></user>",
                 resolve:{
                     Profile:["Auth",function(Auth){
                         return Auth.$requireSignIn();

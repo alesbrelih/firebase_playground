@@ -3,7 +3,16 @@ function userComponentModule(app){
 
     //user component controller
     function userComponentController(){
+
+        //current scope
         const vm = this;
+
+        //on init
+        vm.$onInit = ()=>{
+            //set current user
+            vm.currentuser = vm.user.val();
+
+        };
 
     }
 

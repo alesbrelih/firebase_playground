@@ -1,17 +1,17 @@
 <div class="user-wrapper">
     <div class="profile-username">
-        ljiech
+        {{vm.currentuser.username}}
     </div>
     <div class="profile-details">
         <div class="profile-picture">
-            <img src="http://images.fineartamerica.com/images-medium/random-photography-talent-awesome-vijay-patel.jpg" alt="wow">
+            <img ng-src="{{vm.currentuser.photo}}" alt="wow">
         </div>
         <div class="profile-info">
             <dl>
-                <dt>Name</dt>
-                <dd>Aleš</dd>
-                <dt>Lastname</dt>
-                <dd>Brelih</dd>
+                <dt ng-if="vm.currentuser.name">Name</dt>
+                <dd ng-if="vm.currentuser.name">{{vm.currentuser.name}}</dd>
+                <dt ng-if="vm.currentuser.lastname">Lastname</dt>
+                <dd ng-if="vm.currentuser.lastname">{{vm.currentuser.lastname}}</dd>
             </dl>
         </div>
     </div>
