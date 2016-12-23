@@ -11,6 +11,8 @@ function chatServiceModule(app){
         const roomTypes = require("../../constant/room.types");
 
         // --- privates --- //
+
+        // --- properties --- //
         const rooms = [];
         let current = {
             user:null,
@@ -20,10 +22,9 @@ function chatServiceModule(app){
         let p_uid = null;
         let currentUserDb = null;
 
-        //functions
+        // ------- functions ------- //
 
         // ----- previous rooms functions ----- //
-
         function joinPreviousRooms(){
 
             //clear rooms
@@ -148,7 +149,6 @@ function chatServiceModule(app){
 
             //same name already exists
             if(sameRoom.length == 1){
-                //DO SOMETHING BUT STOP FUNCTION TO BE EXeCUTED
                 current.room = sameRoom[0];
                 deffered.resolve();
             }
@@ -168,6 +168,7 @@ function chatServiceModule(app){
                             //creates room
                             const room = $firebaseRef.rooms.push();
                             room.set({
+                                type:roomTypes.room,
                                 name:roomName
                             });
 
@@ -176,7 +177,10 @@ function chatServiceModule(app){
 
                             //push user/room to ref in db
                             $firebaseRef.userRooms.child(p_uid).child(room.key)
-                                .set({name:roomName});
+                                .set({
+                                    type:roomTypes.room,
+                                    name:roomName
+                                });
                             $firebaseRef.roomUsers.child(room.key).child(p_uid)
                                 .set({
                                     name:currentUserDb.name,
@@ -194,7 +198,10 @@ function chatServiceModule(app){
                             }
 
                             $firebaseRef.userRooms.child(p_uid).child(roomId)
-                                .set({name:roomName});
+                                .set({
+                                    type:roomTypes.room,
+                                    name:roomName
+                                });
                             $firebaseRef.roomUsers.child(roomId).child(p_uid)
                                 .set({
                                     name:currentUserDb.name,
@@ -352,6 +359,7 @@ function chatServiceModule(app){
             }
             else if(room.type == roomTypes.private){
                 //do stuff when private
+                current.private = room;
             }
         };
 
