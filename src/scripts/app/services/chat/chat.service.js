@@ -14,15 +14,22 @@ function chatServiceModule(app){
 
         // --- properties --- //
         const rooms = [];
+        const privateRooms = [];
+
+        //object with currently selected data
         let current = {
             user:null,
             room:null,
             private:null
         };
+
+        //user data
         let p_uid = null;
         let currentUserDb = null;
 
         // ------- functions ------- //
+
+        // ------- public room functions ------ //
 
         // ----- previous rooms functions ----- //
         function joinPreviousRooms(){
@@ -75,8 +82,6 @@ function chatServiceModule(app){
         //joins previous room
         function previousRoom(exRoomId){
             // TODO: JOIN ROOM ON DB
-
-
 
             //room def exists
             if(exRoomId){
@@ -175,13 +180,15 @@ function chatServiceModule(app){
                             //save room id
                             roomId = room.key;
 
+                            console.log("roomId",roomId);
+
                             //push user/room to ref in db
-                            $firebaseRef.userRooms.child(p_uid).child(room.key)
+                            $firebaseRef.userRooms.child(p_uid).child(roomId)
                                 .set({
                                     type:roomTypes.room,
                                     name:roomName
                                 });
-                            $firebaseRef.roomUsers.child(room.key).child(p_uid)
+                            $firebaseRef.roomUsers.child(roomId).child(p_uid)
                                 .set({
                                     name:currentUserDb.name,
                                     lastname:currentUserDb.lastname,
@@ -238,6 +245,7 @@ function chatServiceModule(app){
                                 id: success[0].key
                             };
 
+
                             //add to list
                             rooms.push(room);
 
@@ -255,9 +263,6 @@ function chatServiceModule(app){
                         });
 
 
-
-
-
                     }).catch(err=>{
                         deffered.reject();
                         console.log(err);
@@ -270,6 +275,112 @@ function chatServiceModule(app){
             //return promise
             return deffered.promise;
 
+        }
+
+        // ----- private rooms functions ----- //
+
+        //joins all previous private rooms
+        function joinPreviousPrivates(){
+
+            //clear previous privates
+            while(privateRooms.length>0){
+                privateRooms.pop();
+            }
+
+            //join previous rooms
+            $firebaseRef.userPrivateRooms.child(p_uid).on("child_added")
+                .then(snap=>{
+                    const userPrivate = snap;
+
+                    //check if snap exists
+                    if(userPrivate !== null){
+                        //if private chats exist and opened
+
+                        //joins previous private
+                        joinPreviousPrivate(userPrivate.key);
+
+                    }
+
+                }).catch(err=>{
+                    console.log(err);
+                });
+        }
+
+        //join specific private room
+        function joinPreviousPrivate(privateId){
+
+            //create promise
+            const deffered = $q.defer();
+
+            //get private room users promise
+            const privateRoomUsersPromise = $firebaseArray($firebaseRef.privateRoomUsers.child(privateId))
+                .$loaded();
+
+            //get private room messages promise
+            const privateRoomMessagesPromise = $firebaseArray($firebaseRef.privateRoomMessages.child(privateId))
+                .$loaded();
+
+            //get room info
+
+            const privateRoomDetailsPromise = $firebaseRef.userPrivateRooms.child(p_uid)
+                .child(privateId).once("value");
+
+            $q.all([privateRoomUsersPromise,privateRoomMessagesPromise,privateRoomDetailsPromise]).then(success=>{
+                //create private room with firebase references
+                const privateRoom = {
+                    users:success[0],
+                    messages:success[1],
+                    roomId:privateId,
+                    name:success[2].name
+                };
+                
+                privateRooms.push(privateRoom);
+            }).catch(err=>{
+                console.log(err);
+            });
+
+
+            return deffered.promise;
+        }
+
+        //join private room
+        function joinPrivate(userId){
+
+            //create promise
+            const deffered = $q.defer();
+
+            //get if room exists
+
+            //get if chat is already opened
+            const existing = privateRooms.filter(item=>{
+                if(item.roomId == `${p_uid}${userId}`){
+                    return item;
+                }
+                if(item.roomId == `${userId}${p_uid}`){
+                    return item;
+                }
+            });
+
+            //existing exist,
+            //change to it
+            if(existing.length == 1){
+                current.private = existing[0];
+                deffered.resolve();
+            }
+
+            else{
+                $firebaseRef.joinPrivateQueue.push({
+                    first:p_uid,
+                    second:userId
+                },()=>{
+                    deffered.resolve();
+                });
+            }
+
+
+
+            //return promise
+            return deffer.promise;
         }
 
         // --- public methods --- //
@@ -298,6 +409,9 @@ function chatServiceModule(app){
 
             //join his rooms
             joinPreviousRooms();
+
+            //join previous privates
+            joinPreviousPrivates();
 
 
         };

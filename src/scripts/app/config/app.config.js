@@ -22,14 +22,24 @@ function appConfigModule(app, firebase) {
 
         //firebase default url
         $firebaseRefProvider.registerUrl({
+            //profile
             default: FirebaseUrl,
             profiles: FirebaseUrl + "profiles",
             profilePhotos:FirebaseUrl+"profile-photos",
+            connected:FirebaseUrl+"connected",
+            //public room refs
             userRooms:FirebaseUrl+"user-rooms",
             rooms:FirebaseUrl+"rooms",
             roomUsers:FirebaseUrl+"room-users",
             roomMessages:FirebaseUrl+"room-messages",
-            connected:FirebaseUrl+"connected"
+            //private rooms ref
+            userPrivateRooms:FirebaseUrl+"user-privates",
+            privateRooms:FirebaseUrl+"private-rooms",
+            privateRoomUsers:FirebaseUrl+"private-room-users",
+            privateRoomMessages:FirebaseUrl+"private-room-messages",
+            //queue to join user
+            joinPrivateQueue:FirebaseUrl+"join-private-room/tasks"
+
 
         });
 
