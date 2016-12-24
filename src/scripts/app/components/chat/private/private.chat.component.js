@@ -8,12 +8,11 @@ function privateChatComponentModule(app){
 
         //scope
         const vm = this;
-
     }
 
 
     // register component
-    app.component("privateChat",{
+    app.component("chatPrivate",{
         controller:privateChatComponentController,
         controllerAs:"vm",
         templateUrl:"/scripts/templates/chat/private/private.chat.component.html",

@@ -40,6 +40,13 @@ var queueLogoutFnc = new queue(queueRefLogout, function(data, progress, resolve,
         admin.database().ref("/room-users").child(snap.key).child(data.uid).remove();
     });
 
+    //quit private rooms
+    admin.database().ref("/user-privates").child(data.uid).on("child_added",function(snap){
+
+        //every private user room remove user id from room users
+        admin.database().ref("/private-room-users").child(snap.key).child(data.uid).remove();
+    });
+
 
 
     //task resolved
@@ -64,8 +71,15 @@ const queuePrivateJoinFnc = new queue(privateChatJoinQueue,function(data, progre
     const firstCheck = admin.database().ref("/private-rooms").child(`${data.first}${data.second}`).once("value");
     const secondCheck = admin.database().ref("/private-rooms").child(`${data.second}${data.first}`).once("value");
     Promise.all([firstCheck,secondCheck]).then(success=>{
+
         //check if any of those options exist
-        const result = success[0] || success[1];
+        let result = false;
+        if(success[0].exists()){
+            result = success[0];
+        }
+        if(success[1].exists()){
+            result = success[1];
+        }
 
         //get both users
         const firstUser = admin.database().ref("/profiles").child(data.first).once("value");
@@ -94,18 +108,16 @@ const queuePrivateJoinFnc = new queue(privateChatJoinQueue,function(data, progre
                 progress(30);
 
                 //push to user Rooms for first
-                const firstUserPrivate = admin.database().ref("user-privates").child(data.first).push();
-                const firstPrivateInfo = {};
-                firstPrivateInfo[roomKey] = {
+                const firstUserPrivate = admin.database().ref("/user-privates").child(data.first).child(roomKey);
+                const firstPrivateInfo = {
                     roomId:roomKey,
                     name:resolvedSecond.val().username
                 };
                 firstUserPrivate.set(firstPrivateInfo);
 
                 //push to user Rooms for first
-                const secondUserPrivate = admin.database().ref("user-privates").child(data.second).push();
-                const secondPrivateInfo = {};
-                secondPrivateInfo[roomKey] = {
+                const secondUserPrivate = admin.database().ref("/user-privates").child(data.second).child(roomKey);
+                const secondPrivateInfo = {
                     roomId: roomKey,
                     name:resolvedFirst.val().username
                 };
@@ -123,12 +135,12 @@ const queuePrivateJoinFnc = new queue(privateChatJoinQueue,function(data, progre
                 const roomKey = result.key;
 
                 //push to user Rooms for first
-                const firstUserPrivate = admin.database().ref("user-privates").child(data.first).push();
-                const firstPrivateInfo = {};
-                firstPrivateInfo[roomKey] = {
+                const firstUserPrivate = admin.database().ref("/user-privates").child(data.first).child(roomKey);
+                const firstPrivateInfo = {
                     roomId:roomKey,
                     name:resolvedSecond.val().username
                 };
+
                 firstUserPrivate.set(firstPrivateInfo);
 
                 //set progress
@@ -142,11 +154,12 @@ const queuePrivateJoinFnc = new queue(privateChatJoinQueue,function(data, progre
                         //check if snap exists
                         if(!snap.exists()){
                             //push to user Rooms for second
-                            const secondUserPrivate = admin.database().ref("user-privates").child(data.second).push();
-                            const secondPrivateInfo = {};
-                            secondPrivateInfo[roomKey] = {
+                            const secondUserPrivate = admin.database().ref("/user-privates").child(data.second).child(roomKey);
+                            const secondPrivateInfo = {
+
                                 roomId: roomKey,
                                 name:resolvedFirst.val().username
+
                             };
                             secondUserPrivate.set(secondPrivateInfo);
                         }

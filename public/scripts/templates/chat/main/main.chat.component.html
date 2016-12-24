@@ -4,7 +4,7 @@
             <i class="fa fa-remove" ng-click="vm.openSide('rooms')"></i>
             <!--<div class="chat-tab messages">Marjan</div>
             <div class="chat-tab active">Branko</div>-->
-            <div ng-repeat="tab in vm.rooms" class="chat-tab" ng-class="{'active':tab.name == vm.current.room.name}" ng-click="vm.selectRoom(tab)">
+            <div ng-repeat="tab in vm.rooms" class="chat-tab" ng-class="{'active':vm.highlightActive(tab)}" ng-click="vm.selectRoom(tab)">
 
                     {{tab.name}}
                     <i class="fa fa-times" ng-click="vm.leaveRoom(tab)"></i>
@@ -20,8 +20,8 @@
             </div>
             <div class="chat-wrapper">
                 <div class="chat-window">
-                    <chat-public current-room="vm.current.room" ng-if="vm.currentRoomType == vm.RoomTypes.room"></chat-public>
-                    <chat-private current-private-room="vm.current.private" ng-if="vm.currentRoomType == vm.RoomTypes.private"></chat-private>
+                    <chat-public current-room="vm.current.room" ng-if="vm.current.type == vm.RoomTypes.room"></chat-public>
+                    <chat-private current-private-room="vm.current.private" ng-if="vm.current.type == vm.RoomTypes.private"></chat-private>
                     <div class="chat-input">
                         <input type="text" placeholder="Type your message ..." ng-model="vm.input">
                         <button type="button" class="button button-primary fa fa-paper-plane" ng-click="vm.sendMessage()"></button>
@@ -32,10 +32,18 @@
                 <div class="room-users" ng-class="{show:vm.sidebar=='people'}">
                     <i class="fa fa-remove"></i>
                     <ul>
-                        <li ng-repeat="user in vm.current.room.users">
+                        <li ng-if="vm.current.type == vm.RoomTypes.room" ng-repeat="user in vm.current.room.users">
                             <div class="user" ng-class="{active:user.username == vm.current.user.username}">
                                 <div class="search"><i class="fa fa-search" ui-sref="main.user({id:user.$id})"></i></div>
-                                <div class="name">
+                                <div class="name" ng-click="vm.joinPrivate(user.$id)">
+                                    {{user.username}}
+                                </div>
+                            </div>
+                        </li>
+                        <li ng-if="vm.current.type == vm.RoomTypes.private" ng-repeat="user in vm.current.private.users">
+                            <div class="user" ng-class="{active:user.username == vm.current.user.username}">
+                                <div class="search"><i class="fa fa-search" ui-sref="main.user({id:user.$id})"></i></div>
+                                <div class="name" ng-click="vm.joinPrivate(user.$id)">
                                     {{user.username}}
                                 </div>
                             </div>

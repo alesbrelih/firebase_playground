@@ -14,13 +14,13 @@ function chatServiceModule(app){
 
         // --- properties --- //
         const rooms = [];
-        const privateRooms = [];
 
         //object with currently selected data
         let current = {
             user:null,
             room:null,
-            private:null
+            private:null,
+            type:null
         };
 
         //user data
@@ -29,17 +29,21 @@ function chatServiceModule(app){
 
         // ------- functions ------- //
 
-        // ------- public room functions ------ //
-
-        // ----- previous rooms functions ----- //
-        function joinPreviousRooms(){
-
+        //clear rooms
+        function clearPrevious(){
             //clear rooms
             if(rooms.length != 0){
                 while(rooms.length != 0){
                     rooms.pop();
                 }
             }
+        }
+
+        // ------- public room functions ------ //
+
+        // ----- previous rooms functions ----- //
+        function joinPreviousRooms(){
+
 
             //joins previous rooms
             $firebaseRef.userRooms.child(p_uid).once("value",user_rooms=>{
@@ -71,6 +75,7 @@ function chatServiceModule(app){
 
                     });
                     current.room = publicRooms[0];
+                    current.type = publicRooms[0].type;
                 }).catch(err=>console.log(err));
 
 
@@ -143,7 +148,6 @@ function chatServiceModule(app){
             //deffered
             const deffered = $q.defer();
 
-
             //check if room you want to join already he joined to
             const sameRoom = rooms.filter(item=>{
                 //conditional statement
@@ -179,8 +183,6 @@ function chatServiceModule(app){
 
                             //save room id
                             roomId = room.key;
-
-                            console.log("roomId",roomId);
 
                             //push user/room to ref in db
                             $firebaseRef.userRooms.child(p_uid).child(roomId)
@@ -253,6 +255,7 @@ function chatServiceModule(app){
                             if(openAfterwards == true){
                                 //set it as current
                                 current.room = room;
+                                current.type = roomTypes.room;
                             }
 
                             //successfull resolve
@@ -282,28 +285,24 @@ function chatServiceModule(app){
         //joins all previous private rooms
         function joinPreviousPrivates(){
 
-            //clear previous privates
-            while(privateRooms.length>0){
-                privateRooms.pop();
-            }
 
             //join previous rooms
-            $firebaseRef.userPrivateRooms.child(p_uid).on("child_added")
-                .then(snap=>{
+            $firebaseRef.userPrivateRooms.child(p_uid).on("child_added",snap=>{
+                if(snap){
                     const userPrivate = snap;
 
                     //check if snap exists
-                    if(userPrivate !== null){
+                    if(userPrivate.exists()){
                         //if private chats exist and opened
 
                         //joins previous private
                         joinPreviousPrivate(userPrivate.key);
 
                     }
+                }
 
-                }).catch(err=>{
-                    console.log(err);
-                });
+            });
+
         }
 
         //join specific private room
@@ -327,18 +326,20 @@ function chatServiceModule(app){
 
             $q.all([privateRoomUsersPromise,privateRoomMessagesPromise,privateRoomDetailsPromise]).then(success=>{
 
-                //add user to that room users
-                success[0].$add(current.user).then(()=>{
-                    //create private room with firebase references
-                    const privateRoom = {
-                        users:success[0],
-                        messages:success[1],
-                        roomId:privateId,
-                        name:success[2].name
-                    };
+                const privateRoom = {
+                    users:success[0],
+                    messages:success[1],
+                    roomId:privateId,
+                    name:success[2].val().name,
+                    type:roomTypes.private
+                };
 
-                    privateRooms.push(privateRoom);
-                });
+                rooms.push(privateRoom);
+                current.private = privateRoom;
+                current.type = roomTypes.private;
+
+                const privateChatUserRef = $firebaseRef.privateRoomUsers.child(privateId).child(p_uid);
+                privateChatUserRef.set(current.user);
 
             }).catch(err=>{
                 console.log(err);
@@ -357,13 +358,16 @@ function chatServiceModule(app){
             //get if room exists
 
             //get if chat is already opened
-            const existing = privateRooms.filter(item=>{
-                if(item.roomId == `${p_uid}${userId}`){
-                    return item;
+            const existing = rooms.filter(item=>{
+                if(item.roomId){
+                    if(item.roomId == `${p_uid}${userId}`){
+                        return item;
+                    }
+                    if(item.roomId == `${userId}${p_uid}`){
+                        return item;
+                    }
                 }
-                if(item.roomId == `${userId}${p_uid}`){
-                    return item;
-                }
+
             });
 
             //existing exist,
@@ -381,11 +385,8 @@ function chatServiceModule(app){
                     deffered.resolve();
                 });
             }
-
-
-
             //return promise
-            return deffer.promise;
+            return deffered.promise;
         }
 
         // --- public methods --- //
@@ -411,6 +412,8 @@ function chatServiceModule(app){
 
                     userConnected.onDisconnect().remove();
                 });
+
+            clearPrevious();
 
             //join his rooms
             joinPreviousRooms();
@@ -469,29 +472,61 @@ function chatServiceModule(app){
             return joinRoom(_roomName,_joinAfterwards);
         };
 
+        //join private chat
+        chatFactory.JoinPrivate = (userId) =>{
+            return joinPrivate(userId);
+        };
+
         //select room
         chatFactory.SelectRoom = (room) => {
             // select room
             if(room.type == roomTypes.room){
                 //select new room
                 current.room = room;
+                current.type = roomTypes.room;
             }
             else if(room.type == roomTypes.private){
                 //do stuff when private
                 current.private = room;
+                current.type = roomTypes.private;
             }
         };
 
         //leave room
         chatFactory.LeaveRoom = (room) => {
 
-            //remove user entry from room users
-            const removeFromRoomUsersPromise = $firebaseRef.roomUsers.child(room.id).child(p_uid).remove();
-            //remove room from user rooms
-            const removeFromUserRoomsPromise = $firebaseRef.userRooms.child(p_uid).child(room.id).remove();
+            //array containing promises
+            const promiseArray = [];
+
+            //if room leaving is public
+            if(room.type == roomTypes.room){
+
+                //remove user entry from room users
+                const removeFromRoomUsersPromise = $firebaseRef.roomUsers.child(room.id).child(p_uid).remove();
+
+                promiseArray.push(removeFromRoomUsersPromise);
+
+                //remove room from user rooms
+                const removeFromUserRoomsPromise = $firebaseRef.userRooms.child(p_uid).child(room.id).remove();
+
+                promiseArray.push(removeFromUserRoomsPromise);
+
+            }
+
+            else if(room.type == roomTypes.private){
+                // if private then other queries
+
+                //remove user entry from room users
+                const removeFromPrivateUsersPromise = $firebaseRef.privateRoomUsers.child(room.roomId).child(p_uid).remove();
+                promiseArray.push(removeFromPrivateUsersPromise);
+
+                //remove room from user rooms
+                const removeFromUserPrivatesPromise = $firebaseRef.userPrivateRooms.child(p_uid).child(room.roomId).remove();
+                promiseArray.push(removeFromUserPrivatesPromise);
+            }
 
             //once both resolved succesffuly, remove room from array and select new room
-            $q.all([removeFromRoomUsersPromise,removeFromUserRoomsPromise]).then(()=>{
+            $q.all(promiseArray).then(()=>{
 
                 //get index
                 const indexInArray = rooms.indexOf(room);
@@ -504,20 +539,25 @@ function chatServiceModule(app){
                     // no rooms left
                     if(rooms.length == 0){
                         current.room = null;
+                        current.type = null;
                     }
                     else{
                         //select next room instead of previous
                         current.room = rooms[0];
+                        current.type = room[0].type;
                     }
                 }
                 else{
                     //other edge case
                     if(indexInArray == rooms.length){
                         current.room = rooms[indexInArray-1];
+                        current.type = rooms[indexInArray-1].type;
                     }
                 }
 
             }).catch(err=>console.log(err));
+
+
 
         };
 

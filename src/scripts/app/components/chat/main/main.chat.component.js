@@ -17,8 +17,6 @@ function mainChatComponentModule(app){
             //set chat
             ChatService.JoinChat();
 
-            //once joins room dont join privates
-            vm.currentRoomType = vm.RoomTypes.room;
 
             //get all chat rooms
             vm.rooms = ChatService.Rooms();
@@ -50,7 +48,7 @@ function mainChatComponentModule(app){
                 console.log(vm.current.room.users);
             }
             //sends message to current room
-            ChatService.SendMessage(vm.input,vm.currentRoomType)
+            ChatService.SendMessage(vm.input,vm.current.type)
                 .then(()=>{
                     //success
                     //clear input
@@ -68,12 +66,38 @@ function mainChatComponentModule(app){
             }
         };
 
+        //join private
+        vm.joinPrivate = (userId) => {
+            ChatService.JoinPrivate(userId);
+        };
+
         //select room
         vm.selectRoom = (room)=>{
             ChatService.SelectRoom(room);
-            if(room.type == vm.RoomTypes.room){
-                vm.currentRoomType = vm.RoomTypes.room;
+        };
+
+        //highlight active
+        vm.highlightActive = (room)=>{
+
+
+            if(vm.current.type == vm.RoomTypes.room){
+                if(vm.current.room != null){
+                    if(vm.current.room.name == room.name){
+                        return true;
+                    }
+                }
+
             }
+            else if(vm.current.type == vm.RoomTypes.private){
+                if(vm.current.private != null){
+                    if(vm.current.private.name == room.name){
+                        return true;
+                    }
+                }
+
+            }
+
+
         };
 
         //leave room method
