@@ -3814,7 +3814,6 @@ chat-main {
             height: 50px;
             border-radius: 50%;
             background-color: white;
-            background-image: url("https://assets.goodstatic.com/s3/magazine/others/meta/goodlogosquare.png");
             background-position: center;
             background-size: cover; }
         .chat-container .private-room-messages ul li .message-container .body-container {

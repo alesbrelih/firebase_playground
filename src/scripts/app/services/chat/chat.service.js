@@ -86,7 +86,6 @@ function chatServiceModule(app){
 
         //joins previous room
         function previousRoom(exRoomId){
-            // TODO: JOIN ROOM ON DB
 
             //room def exists
             if(exRoomId){
@@ -285,7 +284,6 @@ function chatServiceModule(app){
         //joins all previous private rooms
         function joinPreviousPrivates(){
 
-
             //join previous rooms
             $firebaseRef.userPrivateRooms.child(p_uid).on("child_added",snap=>{
                 if(snap){
@@ -440,11 +438,10 @@ function chatServiceModule(app){
         };
 
         //send message to current room
-        chatFactory.SendMessage = (_chatMessage, _roomType)=>{
+        chatFactory.SendMessage = (_chatMessage)=>{
             const deffered = $q.defer();
 
-            if(_roomType === roomTypes.room){
-
+            if(current.type === roomTypes.room){
 
                 //add message to ref
                 current.room.messages.$add({
@@ -459,8 +456,19 @@ function chatServiceModule(app){
 
 
             }
-            else if(_roomType === roomTypes.private){
-                //TODO FOR PRIVATES
+            else if(current.type === roomTypes.private){
+
+                //add message for privates
+                current.private.messages.$add({
+                    profile:current.user,
+                    message:_chatMessage
+                }).then(()=>{
+                    deffered.resolve();
+                }).catch(err=>{
+                    console.log(err);
+                    deffered.reject();
+                });
+
             }
 
             return deffered.promise;
