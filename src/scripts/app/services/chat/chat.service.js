@@ -326,15 +326,20 @@ function chatServiceModule(app){
                 .child(privateId).once("value");
 
             $q.all([privateRoomUsersPromise,privateRoomMessagesPromise,privateRoomDetailsPromise]).then(success=>{
-                //create private room with firebase references
-                const privateRoom = {
-                    users:success[0],
-                    messages:success[1],
-                    roomId:privateId,
-                    name:success[2].name
-                };
-                
-                privateRooms.push(privateRoom);
+
+                //add user to that room users
+                success[0].$add(current.user).then(()=>{
+                    //create private room with firebase references
+                    const privateRoom = {
+                        users:success[0],
+                        messages:success[1],
+                        roomId:privateId,
+                        name:success[2].name
+                    };
+
+                    privateRooms.push(privateRoom);
+                });
+
             }).catch(err=>{
                 console.log(err);
             });
